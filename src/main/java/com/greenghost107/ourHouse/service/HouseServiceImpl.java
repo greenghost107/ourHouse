@@ -12,12 +12,10 @@ import com.greenghost107.ourHouse.repository.HouseRepository;
 import com.greenghost107.ourHouse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.reflect.generics.tree.Tree;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 public class HouseServiceImpl implements HouseService {
@@ -26,6 +24,9 @@ public class HouseServiceImpl implements HouseService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private GroceryListService groceryListService;
 	
 	@Override
 	public House addHouse(House house) {
@@ -66,15 +67,36 @@ public class HouseServiceImpl implements HouseService {
 		return house.getUsers();
 	}
 	
+	
 	@Override
-	public GroceryList getLastGroceryListForHouse(HouseDto houseDto,UserDto userDto)
+	public List<String> getAllGroceryListNamesForHouse(HouseDto houseDto)
 	{
-//		House house = houseRepository.findByHouseName(houseDto.getHouseName());
-//		Set<GroceryList> groceryLists = house.getGroceryList();
-//		return (groceryLists.isEmpty()?null:(GroceryList)groceryLists.toArray()[groceryLists.size()-1]);
 		House house = houseRepository.findByHouseName(houseDto.getHouseName());
+		List<String> nameList = new ArrayList<>();
+		for (GroceryList groceryList:house.getGroceryList())
+		{
+			nameList.add(groceryList.getDt_created().toString());
+		}
+		return nameList;
+	}
+	//TODO check that logics works
+	@Override
+	public Boolean removeGroceryListForHouseByName(HouseDto houseDto,Long listId)
+	{
+		House house = houseRepository.findByHouseName(houseDto.getHouseName());
+		List<GroceryList> groceryLists =  house.getGroceryList();
+		int origSize = groceryLists.size();
+		for (GroceryList gList : groceryLists)
+		{
+			if (listId == gList.getId())
+			{
+				groceryListService.removeGroceryList(gList);
+				break;
+			}
+		}
 		
-		return house.getLastGroceryList(userDto.getUserName());
+		groceryLists =  house.getGroceryList();
+		return groceryLists.size()+1 == origSize;
 	}
 	
 	

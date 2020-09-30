@@ -5,10 +5,10 @@ package com.greenghost107.ourHouse.service;
 
 import com.greenghost107.ourHouse.dto.HouseDto;
 import com.greenghost107.ourHouse.dto.UserDto;
-import com.greenghost107.ourHouse.model.GroceryList;
 import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.model.User;
 
+import java.util.List;
 import java.util.Set;
 
 public interface HouseService {
@@ -21,5 +21,9 @@ public interface HouseService {
 	
 	Set<User> getUsersForHouse(HouseDto houseDto);
 	
-	GroceryList getLastGroceryListForHouse(HouseDto houseDto,UserDto userDto);
+//	GroceryList getLastGroceryListForHouse(HouseDto houseDto,UserDto userDto);
+	
+	List<String> getAllGroceryListNamesForHouse(HouseDto houseDto);
+	
+	Boolean removeGroceryListForHouseByName(HouseDto houseDto,Long listId);
 }

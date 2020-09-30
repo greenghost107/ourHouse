@@ -17,6 +17,11 @@ public class House {
 	
 	private String houseName;
 	
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "owner_id", referencedColumnName = "id")
+//	//@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+//	private User owner;
+	
 	@JsonBackReference
 	@OneToMany(mappedBy="house",cascade=CascadeType.ALL)
 	private Set<User> users;
@@ -27,11 +32,16 @@ public class House {
 	
 	public House(){}
 	
-	public House(String name) {
-		this.houseName = name;
-		this.users = new HashSet<>();
-		this.groceryList = new ArrayList<>();
-	}
+//	public House(String name) {
+//		this.houseName = name;
+//		this.users = new HashSet<>();
+//		this.groceryList = new ArrayList<>();
+//	}
+public House(String name,User user) {
+	this.houseName = name;
+	this.users = new HashSet<>();
+	this.groceryList = new ArrayList<>();
+}
 	
 	
 	public String getName() {

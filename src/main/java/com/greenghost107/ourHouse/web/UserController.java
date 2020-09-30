@@ -15,13 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -32,11 +30,9 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<User> addUser(final UserDto userDto) {
+	public ResponseEntity<User> addUser(@RequestParam(name = "userName") UserDto userDto) {
 		LOGGER.info("add user");
-		//TODO michael - remove the user finding
-		User user = new User(userDto.getUserName());
-		return Optional.ofNullable(userService.saveUser(user))
+		return Optional.ofNullable(userService.saveUser(userDto))
 				.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Can't add User"));
 	}
@@ -51,7 +47,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/joinUserToHouse",method = RequestMethod.POST)
-	public ResponseEntity<User> joinUserToHouse(UserDto userDto,HouseDto houseDto) {
+	public ResponseEntity<User> joinUserToHouse(@RequestParam(name = "userName")UserDto userDto,@RequestParam(name = "houseName")HouseDto houseDto) {
 		LOGGER.info("create House " + houseDto.getHouseName() + " By User " + userDto.getUserName());
 		return Optional.ofNullable(userService.joinUserToHouse(userDto,houseDto))
 				.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))

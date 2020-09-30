@@ -4,17 +4,12 @@
 package com.greenghost107.ourHouse.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
-@Table(name = "grocery")
 public class Grocery implements Serializable {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -25,6 +20,11 @@ public class Grocery implements Serializable {
 	
 	private String url;
 	
+	@JsonBackReference
+	@ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+
+	private GroceryList groceryList;
+	
 	public Grocery(){}
 	
 	public Grocery(String name) {
@@ -33,15 +33,13 @@ public class Grocery implements Serializable {
 		this.url = null;
 	}
 	
-	public Grocery(String name, double quantity, String url) {
+	public Grocery(String name, double quantity, String url,GroceryList groceryList) {
 		this.name = name;
 		this.quantity = quantity;
 		this.url = url;
+		this.groceryList = groceryList;
 	}
 	
-	public Long getId() {
-		return id;
-	}
 	
 	public String getName() {
 		return name;

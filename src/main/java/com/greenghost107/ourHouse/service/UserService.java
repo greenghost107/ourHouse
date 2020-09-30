@@ -8,11 +8,10 @@ import com.greenghost107.ourHouse.dto.UserDto;
 import com.greenghost107.ourHouse.model.User;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserService {
 	
-	User saveUser(User user);
+	User saveUser(UserDto userDto);
 	
 	User findByUserName(String userName);
 	

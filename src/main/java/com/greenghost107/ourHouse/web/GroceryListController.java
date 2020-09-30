@@ -8,7 +8,6 @@ import com.greenghost107.ourHouse.dto.GroceryListDto;
 import com.greenghost107.ourHouse.exceptions.SpringException;
 import com.greenghost107.ourHouse.model.GroceryList;
 import com.greenghost107.ourHouse.service.GroceryListService;
-import com.greenghost107.ourHouse.service.GroceryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +44,5 @@ public class GroceryListController {
 				.map(grol -> new ResponseEntity<>(grol, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Couldn't add grocery " + groceryDto.getName() + " to list " + groceryListDto.getId()));
 	}
+	
 }

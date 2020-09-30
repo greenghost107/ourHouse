@@ -12,11 +12,7 @@ import com.greenghost107.ourHouse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 @Service
 public class UserServiceImpl implements UserService{
 	
@@ -30,8 +26,8 @@ public class UserServiceImpl implements UserService{
 	private HouseService houseService;
 	
 	@Override
-	public User saveUser(User user) {
-		return userRepository.save(user);
+	public User saveUser(UserDto userDto) {
+		return userRepository.save(new User(userDto.getUserName()));
 	}
 	
 	@Override
@@ -52,7 +48,7 @@ public class UserServiceImpl implements UserService{
 		House house = houseRepository.findByHouseName(houseDto.getHouseName());
 		if (house == null)
 		{
-			house = houseService.addHouse(new House(houseDto.getHouseName()));
+			house = houseService.addHouse(new House(houseDto.getHouseName(),user));
 		}
 		user.setHouse(house);
 		return userRepository.save(user);
