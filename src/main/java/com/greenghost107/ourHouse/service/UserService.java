@@ -13,11 +13,13 @@ public interface UserService {
 	
 	User saveUser(UserDto userDto);
 	
-	User findByUserName(String userName);
+	User findByUsername(String userName);
 	
 	List<User> findAllUsers();
 	
 	User joinUserToHouse(UserDto userDto,HouseDto houseDto);
 	
+	public void save(User user);
 	
+	boolean isValidUser(User user);
 }
