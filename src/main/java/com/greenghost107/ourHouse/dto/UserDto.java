@@ -7,6 +7,9 @@ public class UserDto {
 	
 	private String userName;
 	
+	public UserDto() {
+	}
+	
 	public UserDto(String userName) {
 		this.userName = userName;
 	}
