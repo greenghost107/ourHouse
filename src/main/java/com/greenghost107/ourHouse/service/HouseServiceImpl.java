@@ -51,8 +51,19 @@ public class HouseServiceImpl implements HouseService {
 	@Override
 	public House createNewGroceryList(UserDto userDto,HouseDto houseDto)
 	{
-		House house = houseRepository.findByHouseName(houseDto.getHouseName());
-		if (!house.createNewGroceryList(userDto.getUserName()))
+//		House house = houseRepository.findByHouseName(houseDto.getHouseName());
+//		if (!house.createNewGroceryList(userDto.getUserName()))
+//		{
+//			return null;
+//		}
+//		houseRepository.save(house);
+//		return house;
+		return createNewGroceryList(userDto.getUserName(),houseDto.getHouseName());
+	}
+	@Override
+	public House createNewGroceryList(String userName, String houseName) {
+		House house = houseRepository.findByHouseName(houseName);
+		if (!house.createNewGroceryList(userName))
 		{
 			return null;
 		}
@@ -71,7 +82,19 @@ public class HouseServiceImpl implements HouseService {
 	@Override
 	public List<String> getAllGroceryListNamesForHouse(HouseDto houseDto)
 	{
-		House house = houseRepository.findByHouseName(houseDto.getHouseName());
+//		House house = houseRepository.findByHouseName(houseDto.getHouseName());
+//		List<String> nameList = new ArrayList<>();
+//		for (GroceryList groceryList:house.getGroceryList())
+//		{
+//			nameList.add(groceryList.getDt_created().toString());
+//		}
+//		return nameList;
+		return getAllGroceryListNamesForHouse(houseDto.getHouseName());
+	}
+	
+	@Override
+	public List<String> getAllGroceryListNamesForHouse(String houseName) {
+		House house = houseRepository.findByHouseName(houseName);
 		List<String> nameList = new ArrayList<>();
 		for (GroceryList groceryList:house.getGroceryList())
 		{
@@ -79,6 +102,7 @@ public class HouseServiceImpl implements HouseService {
 		}
 		return nameList;
 	}
+	
 	//TODO check that logics works
 	@Override
 	public Boolean removeGroceryListForHouseByName(HouseDto houseDto,Long listId)
@@ -97,6 +121,11 @@ public class HouseServiceImpl implements HouseService {
 		
 		groceryLists =  house.getGroceryList();
 		return groceryLists.size()+1 == origSize;
+	}
+	
+	@Override
+	public House findByHouseName(String username) {
+		return houseRepository.findByHouseName(username);
 	}
 	
 	

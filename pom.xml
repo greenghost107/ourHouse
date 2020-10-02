@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+        <spring.swagger2.version>2.8.0</spring.swagger2.version>
 	</properties>
 
 	<dependencies>
@@ -43,12 +44,12 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.8.0</version>
+			<version>${spring.swagger2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.8.0</version>
+			<version>${spring.swagger2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

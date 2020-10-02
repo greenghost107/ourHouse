@@ -55,6 +55,12 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
+	public House findHouseForUser(String loggedInUsername) {
+	User user = userRepository.findByUsername(loggedInUsername);
+		return user.getHouse();
+	}
+	
+	@Override
 	public User saveUser(UserDto userDto) {
 		return userRepository.save(new User(userDto.getUserName()));
 	}
@@ -69,7 +75,7 @@ public class UserServiceImpl implements UserService{
 	{
 	return userRepository.findAll();
 	}
-	
+	//TODO michael merge these two
 	@Override
 	public User joinUserToHouse(UserDto userDto,HouseDto houseDto)
 	{
@@ -83,6 +89,18 @@ public class UserServiceImpl implements UserService{
 		return userRepository.save(user);
 	}
 	
-	
+	@Override
+	public User joinUserToHouse(String userName,House house) {
+		User user = userRepository.findByUsername(userName);
+		String inputHouseName = house.getHouseName();
+		house = houseRepository.findByHouseName(inputHouseName);
+		if (house == null)
+		{
+			house = houseService.addHouse(new House(inputHouseName,user));
+		}
+		user.setHouse(house);
+		return userRepository.save(user);
+		
+	}
 	
 }

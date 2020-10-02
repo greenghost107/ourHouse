@@ -25,5 +25,13 @@ public interface HouseService {
 	
 	List<String> getAllGroceryListNamesForHouse(HouseDto houseDto);
 	
+	List<String> getAllGroceryListNamesForHouse(String houseName);
+	
 	Boolean removeGroceryListForHouseByName(HouseDto houseDto,Long listId);
+	
+	House findByHouseName(String houseName);
+	
+	House createNewGroceryList(String userName, String houseName);
+	
+	
 }
