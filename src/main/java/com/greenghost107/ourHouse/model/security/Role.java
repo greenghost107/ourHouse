@@ -3,6 +3,7 @@
  */
 package com.greenghost107.ourHouse.model.security;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.greenghost107.ourHouse.model.User;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Role {
 	
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
+	
 	
 	@ManyToMany
 //    @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))

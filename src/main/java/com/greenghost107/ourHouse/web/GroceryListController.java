@@ -36,7 +36,7 @@ public class GroceryListController {
 				.orElseThrow(() -> new SpringException("No GroceryLists Found"));
 	}
 	
-	@RequestMapping(value = "/addGrocery",method = RequestMethod.POST)
+	@RequestMapping(value = "/addGrocery",method = RequestMethod.POST,headers="Accept=application/json")
 	public ResponseEntity<GroceryList> addGroceryToList(GroceryListDto groceryListDto, GroceryDto groceryDto)
 	{
 		LOGGER.info("add grocery to groceryList " + groceryListDto.getId());

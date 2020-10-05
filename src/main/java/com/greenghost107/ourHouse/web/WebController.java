@@ -4,6 +4,7 @@
 package com.greenghost107.ourHouse.web;
 
 import com.greenghost107.ourHouse.dto.UserDto;
+import com.greenghost107.ourHouse.model.GroceryList;
 import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.service.GroceryListService;
@@ -20,6 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 public class WebController {
@@ -53,7 +56,7 @@ public class WebController {
 			securityService.autoLogin(user.getUsername(), user.getPassword());
 			return "redirect:/user/userHomeScreen";
 		}
-		return "index";
+		return "/";
 	}
 	
 	@RequestMapping(value = {"/registration"},method = RequestMethod.GET)
@@ -114,14 +117,14 @@ public class WebController {
 		
 		return "/user/userHomeScreen";
 	}
-	@RequestMapping(value = {"/user/index2"},method = RequestMethod.GET)
-	public String gateway(Model model) {
-		String userName = securityService.findLoggedInUsername();
-		House house = userService.findHouseForUser(userName);
-		model.addAttribute("house", house);
-		model.addAttribute("groceryLists", houseService.getAllGroceryListNamesForHouse(house.getHouseName()));
-		return "/user/userHomeScreen";
-	}
+//	@RequestMapping(value = {"/user/index2"},method = RequestMethod.GET)
+//	public String gateway(Model model) {
+//		String userName = securityService.findLoggedInUsername();
+//		House house = userService.findHouseForUser(userName);
+//		model.addAttribute("house", house);
+//		model.addAttribute("groceryLists", houseService.getAllGroceryListNamesForHouse(house.getHouseName()));
+//		return "/user/userHomeScreen";
+//	}
 	@RequestMapping(value = {"/user/newGroceryList"},method = RequestMethod.GET)
 	public String userGroceryList(Model model) {
 		String userName = securityService.findLoggedInUsername();
@@ -145,6 +148,25 @@ public class WebController {
 		
 		return "/user/groceryList";
 	}
+	
+//	@RequestMapping(value = {"/user/saveGroceryList"},method = RequestMethod.POST)
+//	public String SaveGroceryList(List<GroceryList> groceryLists,Model model) {
+//		String userName = securityService.findLoggedInUsername();
+//		House house = userService.findHouseForUser(userName);
+//
+//		house = houseService.createNewGroceryList(userName,house.getHouseName());
+//		model.addAttribute("house", house);
+//		model.addAttribute("groceryLists", houseService.getAllGroceryListNamesForHouse(house.getHouseName()));
+//		LOGGER.info("SavedGroceryList");
+//		return "/user/userHomeScreen";
+//	}
+	@RequestMapping(value = {"/user/index2"},method = RequestMethod.POST)
+	public String SaveGroceryList(String str)
+	{
+		LOGGER.info("str");
+		return "/user/userHomeScreen";
+	}
+	
 	
 	@RequestMapping("/loginError")
 	public String loginError(Model model) {

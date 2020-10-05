@@ -7,12 +7,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/shards.min.css">
+
 </head>
 <body>
-<div>
-    <input type="text" id="datePlanted" name="datePlanted" th:value="*{datePlanted}" />
+<!--<div>-->
+    <!--<input type="text" id="datePlanted" name="datePlanted" th:value="*{datePlanted}" />-->
+<!--</div>-->
+<!--<div class="container">-->
+<!--<div id="parentElement" class="row text-right">-->
+    <!--<label>Add another input line</label>-->
+    <!--<button onclick="addInputLine()" name="addInputLine" class="btn btn-default" ><span class="fa fa-plus"></span></button>-->
+<!--</div>-->
+    <!--<script src="js/script.js"></script>-->
+<!--</div>-->
+<!---->
+<div class='container'>
+    <h3> OurHouse </h3>
+    <br>
+    <br>
+    <h3> Add Item </h3>
+    <!--<input id='newTask' type='text'>-->
+    <!--<button id='addTaskButton'>Add</button>-->
+    <input id='grocery' type='text'>
+    <input id='quantity' type='text'>
+    <button id='addGroceryButton'>Add</button>
+
+    <h3> Grocery List </h3>
+
+    <ul id='groceryListTodo'>
+        <li>
+            <input type='checkbox'> <label>Cucumber 4</label>
+            <button class='delete'>Delete</button>
+        </li>
+    </ul>
+
+    <h3> Completed </h3>
+    <ul id='completedTasks'>
+        <li>
+            <input type='checkbox' checked>
+            <label>Buy Peanut Butter</label>
+            <button class='delete'>Delete</button>
+        </li>
+    </ul>
+    <br>
+    <br>
+    <button id='saveGroceryList' onclick="saveGroceryList()">save to Grocery List</button>
+    <!--<form action='second_02.html + ?pid=vpid&' id="sky-form" class="sky-form">-->
+
+
+    <script type="text/javascript" th:src="@{/js/custom.js}"></script>
 </div>
+
+<!---->
+
+<!--<div>-->
+<!--<input type="text" name="" value="food" id="food">-->
+<!--<br>-->
+<!--<input type="text" name="" value="amount" id="amount">-->
+<!--<br>-->
+
+<!--<select id="unit">-->
+    <!--<option value="oz">ounces</option>-->
+    <!--<option value="lb">pounds</option>-->
+    <!--<option value="servings">servings</option>-->
+<!--</select>-->
+
+<!--<br>-->
+<!--<button onclick="addToList()" type="button" name="button" id="addButton">add</button>-->
+<!--<br>-->
+<!--<ul id="foodlist"></ul>-->
+<!--<script.js src="js/script.js.js"></script.js>-->
+<!--</div>-->
+
 <!--<p>Get your greeting <a href="/greeting">here</a></p>-->
 </body>
 </html>

@@ -2,6 +2,8 @@
  * Created by greenghost107 on Oct/2020
  */
 package com.greenghost107.ourHouse.model.security;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Collection;
 
