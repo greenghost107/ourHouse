@@ -9,6 +9,8 @@ import com.greenghost107.ourHouse.exceptions.SpringException;
 import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.service.HouseService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ public class HouseController {
 	private HouseService houseService;
 	
 	@RequestMapping(value = "/findUsersForHouse", method = RequestMethod.GET)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
 	public ResponseEntity<Set<User>> findUsersForHouse(HouseDto houseDto)
 	{
 		LOGGER.info("find All Users in house " + houseDto.getHouseName());
@@ -40,6 +43,7 @@ public class HouseController {
 	}
 	
 	@RequestMapping(value = "/createNewGroceryList",method = RequestMethod.POST)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
 	public ResponseEntity<House> createNewShoppingList(UserDto userDto ,HouseDto houseDto) {
 		LOGGER.info("create new shopping list");
 		//if house field is empty nukk pointer exception
@@ -49,6 +53,7 @@ public class HouseController {
 	}
 	
 	@RequestMapping(value = "/getAllGroceryListNamesForHouse",method = RequestMethod.GET)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
 	public ResponseEntity<List<String>> getAllGroceryListNamesForHouse(HouseDto houseDto)
 	{
 		LOGGER.info("get All Grocery List Names For House " + houseDto.getHouseName());
@@ -59,6 +64,7 @@ public class HouseController {
 	
 	
 	@RequestMapping(value = "/removeGroceryListForHouseById",method = RequestMethod.DELETE)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
 	public ResponseEntity<Boolean> removeGroceryListForHouseById(HouseDto houseDto,Long listId)
 	{
 		LOGGER.info("get All Grocery List Names For House " + houseDto.getHouseName());

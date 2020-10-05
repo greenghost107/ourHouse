@@ -5,17 +5,22 @@ package com.greenghost107.ourHouse.dto;
 
 public class UserDto {
 	
-	private String userName;
+	private String username;
 	
-	public UserDto(String userName) {
-		this.userName = userName;
+	
+	public UserDto() {
 	}
 	
-	public String getUserName() {
-		return userName;
+	public UserDto(String username) {
+		this.username = username;
 	}
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public String getusername() {
+		return username;
 	}
+	
+	public void setusername(String username) {
+		this.username = username;
+	}
+	
 }

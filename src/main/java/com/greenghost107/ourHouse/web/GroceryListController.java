@@ -8,6 +8,7 @@ import com.greenghost107.ourHouse.dto.GroceryListDto;
 import com.greenghost107.ourHouse.exceptions.SpringException;
 import com.greenghost107.ourHouse.model.GroceryList;
 import com.greenghost107.ourHouse.service.GroceryListService;
+import io.swagger.annotations.ApiImplicitParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class GroceryListController {
 	private GroceryListService groceryListService;
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
 	public ResponseEntity<GroceryList> getGroceryListById(GroceryListDto groceryListDto)
 	{
 		LOGGER.info("get groceryList by Id " + groceryListDto.getId());
@@ -37,6 +39,7 @@ public class GroceryListController {
 	}
 	
 	@RequestMapping(value = "/addGrocery",method = RequestMethod.POST)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
 	public ResponseEntity<GroceryList> addGroceryToList(GroceryListDto groceryListDto, GroceryDto groceryDto)
 	{
 		LOGGER.info("add grocery to groceryList " + groceryListDto.getId());

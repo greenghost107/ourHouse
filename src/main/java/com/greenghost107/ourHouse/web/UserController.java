@@ -8,6 +8,7 @@ import com.greenghost107.ourHouse.dto.UserDto;
 import com.greenghost107.ourHouse.exceptions.SpringException;
 import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,18 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<User> addUser(@RequestParam(name = "userName") UserDto userDto) {
-		LOGGER.info("add user");
-		return Optional.ofNullable(userService.saveUser(userDto))
-				.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))
-				.orElseThrow(() -> new SpringException("Can't add User"));
-	}
+	//TODO check if necessary already registered for token
+//	@RequestMapping(method = RequestMethod.POST)
+//	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
+//	public ResponseEntity<User> addUser(@RequestParam(name = "userName") UserDto userDto) {
+//		LOGGER.info("add user");
+//		return Optional.ofNullable(userService.saveUser(userDto))
+//				.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))
+//				.orElseThrow(() -> new SpringException("Can't add User"));
+//	}
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
 	public ResponseEntity<List<User>> getAllUsers(){
 		LOGGER.info("get All Users");
 		return Optional.ofNullable(userService.findAllUsers())
@@ -47,8 +50,9 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/joinUserToHouse",method = RequestMethod.POST)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
 	public ResponseEntity<User> joinUserToHouse(@RequestParam(name = "userName")UserDto userDto,@RequestParam(name = "houseName")HouseDto houseDto) {
-		LOGGER.info("create House " + houseDto.getHouseName() + " By User " + userDto.getUserName());
+		LOGGER.info("create House " + houseDto.getHouseName() + " By User " + userDto.getusername());
 		return Optional.ofNullable(userService.joinUserToHouse(userDto,houseDto))
 				.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Can't add User to House"));

@@ -1,7 +1,7 @@
 /*
  * Created by greenghost107 on Sep/2020
  */
-package com.greenghost107.ourHouse.service;
+package com.greenghost107.ourHouse.service.impl;
 
 import com.greenghost107.ourHouse.dto.HouseDto;
 import com.greenghost107.ourHouse.dto.UserDto;
@@ -10,11 +10,14 @@ import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.repository.HouseRepository;
 import com.greenghost107.ourHouse.repository.UserRepository;
+import com.greenghost107.ourHouse.service.GroceryListService;
+import com.greenghost107.ourHouse.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -40,7 +43,7 @@ public class HouseServiceImpl implements HouseService {
 //		User user = userRepository.findByUsername(userName);
 //		if (house.addUser(user))
 //		{
-//			house.getUsers().stream().forEach(u-> System.out.println(u.getUsername()));
+//			house.getUsers().stream().forEach(u-> System.out.println(u.getusername()));
 //			return houseRepository.save(house);
 //		}
 //		return null;
@@ -51,27 +54,31 @@ public class HouseServiceImpl implements HouseService {
 	@Override
 	public House createNewGroceryList(UserDto userDto,HouseDto houseDto)
 	{
-		House house = houseRepository.findByHouseName(houseDto.getHouseName());
-		if (!house.createNewGroceryList(userDto.getUserName()))
+		Optional<House> optHouse = houseRepository.findByHouseName(houseDto.getHouseName());
+		
+		if (!optHouse.isPresent() && !optHouse.get().createNewGroceryList(userDto.getusername()))
 		{
 			return null;
 		}
-		houseRepository.save(house);
-		return house;
+		return houseRepository.save(optHouse.get());
+		
 	}
 	
 	@Override
 	public Set<User> getUsersForHouse(HouseDto houseDto)
 	{
-		House house = houseRepository.findByHouseName(houseDto.getHouseName());
-		return house.getUsers();
+		Optional<House> house = houseRepository.findByHouseName(houseDto.getHouseName());
+		return (house.isPresent()?house.get().getUsers():null);
 	}
 	
 	
 	@Override
 	public List<String> getAllGroceryListNamesForHouse(HouseDto houseDto)
 	{
-		House house = houseRepository.findByHouseName(houseDto.getHouseName());
+		Optional<House> optHouse = houseRepository.findByHouseName(houseDto.getHouseName());
+		if(!optHouse.isPresent())
+			return null;
+		House house = optHouse.get();
 		List<String> nameList = new ArrayList<>();
 		for (GroceryList groceryList:house.getGroceryList())
 		{
@@ -79,11 +86,14 @@ public class HouseServiceImpl implements HouseService {
 		}
 		return nameList;
 	}
-	//TODO check that logics works
+	
 	@Override
 	public Boolean removeGroceryListForHouseByName(HouseDto houseDto,Long listId)
 	{
-		House house = houseRepository.findByHouseName(houseDto.getHouseName());
+		Optional<House> optHouse = houseRepository.findByHouseName(houseDto.getHouseName());
+		if(!optHouse.isPresent())
+			return false;
+		House house = optHouse.get();
 		List<GroceryList> groceryLists =  house.getGroceryList();
 		int origSize = groceryLists.size();
 		for (GroceryList gList : groceryLists)

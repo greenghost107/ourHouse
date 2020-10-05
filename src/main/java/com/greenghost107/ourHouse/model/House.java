@@ -43,13 +43,12 @@ public House(String name,User user) {
 	this.groceryList = new ArrayList<>();
 }
 	
-	
-	public String getName() {
+	public String getHouseName() {
 		return houseName;
 	}
 	
-	public void setName(String name) {
-		this.houseName = name;
+	public void setHouseName(String houseName) {
+		this.houseName = houseName;
 	}
 	
 	public Set<User> getUsers() {
