@@ -1,7 +1,7 @@
 /*
  * Created by greenghost107 on Sep/2020
  */
-package com.greenghost107.ourHouse.service;
+package com.greenghost107.ourHouse.service.impl;
 
 import com.greenghost107.ourHouse.dto.GroceryDto;
 import com.greenghost107.ourHouse.dto.GroceryListDto;

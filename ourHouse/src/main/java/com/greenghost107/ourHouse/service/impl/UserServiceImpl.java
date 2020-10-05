@@ -1,7 +1,7 @@
 /*
  * Created by greenghost107 on Sep/2020
  */
-package com.greenghost107.ourHouse.service;
+package com.greenghost107.ourHouse.service.impl;
 
 import com.greenghost107.ourHouse.dto.HouseDto;
 import com.greenghost107.ourHouse.dto.UserDto;
@@ -9,12 +9,14 @@ import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.repository.HouseRepository;
 import com.greenghost107.ourHouse.repository.UserRepository;
+import com.greenghost107.ourHouse.service.HouseService;
+import com.greenghost107.ourHouse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private HouseRepository houseRepository;
