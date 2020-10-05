@@ -8,6 +8,8 @@ import com.greenghost107.ourHouse.dto.GroceryListDto;
 import com.greenghost107.ourHouse.model.Grocery;
 import com.greenghost107.ourHouse.model.GroceryList;
 import com.greenghost107.ourHouse.repository.GroceryListRepository;
+import com.greenghost107.ourHouse.service.GroceryListService;
+import com.greenghost107.ourHouse.service.GroceryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

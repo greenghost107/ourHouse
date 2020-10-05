@@ -43,7 +43,7 @@
       "description" : "${role_offline-access}",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "baeldung",
+      "containerId" : "ourHouse",
       "attributes" : { }
     }, {
       "id" : "0dd6a8c7-d669-4941-9ea1-521980e9c53f",
@@ -51,7 +51,7 @@
       "description" : "${role_uma_authorization}",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "baeldung",
+      "containerId" : "ourHouse",
       "attributes" : { }
     }, {
       "id" : "ca962095-7f9b-49e2-a190-e391a0d4b704",
@@ -302,7 +302,7 @@
     "totp" : false,
     "emailVerified" : false,
     "attributes" : {
-      "organization" : "baeldung",
+      "organization" : "ourHouse",
       "DOB" : "1984-07-01"
     },
     "credentials" : [ {
@@ -352,13 +352,13 @@
     "clientId" : "account",
     "name" : "${client_account}",
     "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/baeldung/account/",
+    "baseUrl" : "/realms/ourHouse/account/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "**********",
     "defaultRoles" : [ "manage-account", "view-profile" ],
-    "redirectUris" : [ "/realms/baeldung/account/*" ],
+    "redirectUris" : [ "/realms/ourHouse/account/*" ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -530,12 +530,12 @@
     "clientId" : "security-admin-console",
     "name" : "${client_security-admin-console}",
     "rootUrl" : "${authAdminUrl}",
-    "baseUrl" : "/admin/baeldung/console/",
+    "baseUrl" : "/admin/ourHouse/console/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "**********",
-    "redirectUris" : [ "/admin/baeldung/console/*" ],
+    "redirectUris" : [ "/admin/ourHouse/console/*" ],
     "webOrigins" : [ "+" ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -1135,13 +1135,13 @@
         "subComponents": {},
         "config": {
           "keystorePassword": [
-            "mypass"
+            "m1cha3l"
           ],
           "keyAlias": [
             "mytest"
           ],
           "keyPassword": [
-            "mypass"
+            "m1cha3l"
           ],
           "active": [
             "true"

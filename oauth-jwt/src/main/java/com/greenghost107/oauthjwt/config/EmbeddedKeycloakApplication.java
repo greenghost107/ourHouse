@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 
 public class EmbeddedKeycloakApplication extends KeycloakApplication {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(EmbeddedKeycloakApplication.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	static KeycloakServerProperties keycloakServerProperties;
 	
@@ -54,7 +54,7 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
 			session.getTransactionManager()
 					.commit();
 		} catch (Exception ex) {
-			LOG.warn("Couldn't create keycloak master admin user: {}", ex.getMessage());
+			LOGGER.warn("Couldn't create keycloak master admin user: {}", ex.getMessage());
 			session.getTransactionManager()
 					.rollback();
 		}
@@ -77,7 +77,7 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
 			session.getTransactionManager()
 					.commit();
 		} catch (Exception ex) {
-			LOG.warn("Failed to import Realm json file: {}", ex.getMessage());
+			LOGGER.warn("Failed to import Realm json file: {}", ex.getMessage());
 			session.getTransactionManager()
 					.rollback();
 		}
