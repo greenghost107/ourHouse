@@ -1,7 +1,7 @@
 /*
  * Created by greenghost107 on Sep/2020
  */
-package com.greenghost107.ourHouse.web;
+package com.greenghost107.ourHouse.web.swagger;
 
 import com.greenghost107.ourHouse.dto.HouseDto;
 import com.greenghost107.ourHouse.dto.UserDto;
@@ -23,21 +23,21 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/users")
+public class UserSwaggerController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private UserService userService;
 	//TODO check if necessary already registered for token
-//	@RequestMapping(method = RequestMethod.POST)
-//	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
-//	public ResponseEntity<User> addUser(@RequestParam(name = "userName") UserDto userDto) {
-//		LOGGER.info("add user");
-//		return Optional.ofNullable(userService.saveUser(userDto))
-//				.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))
-//				.orElseThrow(() -> new SpringException("Can't add User"));
-//	}
+	@RequestMapping(method = RequestMethod.POST)
+	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
+	public ResponseEntity<User> addUser(@RequestParam(name = "userName") UserDto userDto) {
+		LOGGER.info("add user");
+		return Optional.ofNullable(userService.saveUser(userDto))
+				.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))
+				.orElseThrow(() -> new SpringException("Can't add User"));
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")
@@ -47,7 +47,6 @@ public class UserController {
 				.map(cour -> new ResponseEntity<>(cour, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("User DataBase is empty"));
 	}
-	
 	
 	@RequestMapping(value = "/joinUserToHouse",method = RequestMethod.POST)
 	@ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token",defaultValue = "Bearer ")

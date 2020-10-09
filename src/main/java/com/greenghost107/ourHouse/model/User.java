@@ -5,6 +5,7 @@ package com.greenghost107.ourHouse.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.greenghost107.ourHouse.model.security.Role;
 
 import javax.persistence.*;
 
@@ -25,6 +26,9 @@ public class User {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="house_id",referencedColumnName="id")
 	private House house;
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	
 	public User() {
 	}
@@ -59,5 +63,13 @@ public class User {
 	
 	public void setHouse(House house) {
 		this.house = house;
+	}
+	
+	public Role getRole() {
+		return role;
+	}
+	
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

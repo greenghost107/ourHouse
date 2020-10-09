@@ -12,6 +12,7 @@ import com.greenghost107.ourHouse.repository.HouseRepository;
 import com.greenghost107.ourHouse.repository.UserRepository;
 import com.greenghost107.ourHouse.service.GroceryListService;
 import com.greenghost107.ourHouse.service.HouseService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 @Service
 public class HouseServiceImpl implements HouseService {
+	private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private HouseRepository houseRepository;
 	
@@ -36,21 +39,6 @@ public class HouseServiceImpl implements HouseService {
 		return houseRepository.save(house);
 	}
 	
-//	@Override
-//	public House addUserToHouse(HouseDto houseDto,String userName)
-//	{
-//		House house = houseRepository.findByHouseName(houseDto.getHouseName());
-//		User user = userRepository.findByUsername(userName);
-//		if (house.addUser(user))
-//		{
-//			house.getUsers().stream().forEach(u-> System.out.println(u.getusername()));
-//			return houseRepository.save(house);
-//		}
-//		return null;
-//
-//
-//	}
-	
 	@Override
 	public House createNewGroceryList(UserDto userDto,HouseDto houseDto)
 	{
@@ -62,6 +50,22 @@ public class HouseServiceImpl implements HouseService {
 		}
 		return houseRepository.save(optHouse.get());
 		
+	}
+	
+	@Override
+	public House createNewGroceryList(HouseDto houseDto,String creatorName) {
+		Optional<House> optHouse = houseRepository.findById(houseDto.getId());
+//		if (!optHouse.isPresent() && !optHouse.get().createNewGroceryList(creatorName))
+//		{
+//			return null;
+//		}
+//
+//		return houseRepository.save(optHouse.get());
+		House house = optHouse.get();
+		GroceryList groceryList = new GroceryList(house,creatorName);
+		groceryListService.saveGroceryList(groceryList);
+		
+		return house;
 	}
 	
 	@Override
@@ -109,6 +113,24 @@ public class HouseServiceImpl implements HouseService {
 		return groceryLists.size()+1 == origSize;
 	}
 	
+	@Override
+	public House getHouseForUser(String userName) {
+		User user = userRepository.findByUsername(userName);
+		return houseRepository.findById(user.getHouse().getId()).get();
+	}
 	
+	
+	//TODO generate real saving of password
+	@Override
+	public boolean validatePassword(House house, String password) {
+		String housePassword = house.getHousePassword();
+		return housePassword.equals(password);
+	}
+	
+	@Override
+	public House addUserToHouse(House house,User joiningUser) {
+		 return (house.addUser(joiningUser) ? houseRepository.save(house):null) ;
+	
+	}
 	
 }

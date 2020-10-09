@@ -17,6 +17,8 @@ public class House {
 	
 	private String houseName;
 	
+	private String housePassword;
+	
 //	@OneToOne(cascade = CascadeType.ALL)
 //	@JoinColumn(name = "owner_id", referencedColumnName = "id")
 //	//@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
@@ -37,11 +39,17 @@ public class House {
 //		this.users = new HashSet<>();
 //		this.groceryList = new ArrayList<>();
 //	}
-public House(String name,User user) {
+public House(String name,String housePassword, User user) {
 	this.houseName = name;
 	this.users = new HashSet<>();
+	this.users.add(user);
+	this.housePassword = housePassword;
 	this.groceryList = new ArrayList<>();
 }
+	
+	public Long getId() {
+		return id;
+	}
 	
 	public String getHouseName() {
 		return houseName;
@@ -76,5 +84,13 @@ public House(String name,User user) {
 	{
 		
 		return (groceryList.size()>0?groceryList.get(groceryList.size()-1):null);
+	}
+	
+	public String getHousePassword() {
+		return housePassword;
+	}
+	
+	public void setHousePassword(String housePassword) {
+		this.housePassword = housePassword;
 	}
 }

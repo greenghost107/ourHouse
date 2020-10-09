@@ -1,0 +1,53 @@
+﻿<h1>Hi {{currentUser.username}}!</h1>
+<!-- <p>You're logged in with Angular 8!!</p> -->
+<h3>ourHouse</h3>
+<!-- <ul>
+    <li *ngFor="let user of users">
+        {{user.username}} 
+        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+    </li>
+</ul> -->
+<h4>houseName</h4>
+
+<p-dialog header="Create New House" [(visible)]="displayCreate">
+    <div>
+        <label for="name">House Name</label>
+        <input type="text" #houseName>
+    </div>
+    <div>
+        <label for="name">House password</label>
+        <input type="text" #housePassword>
+    </div>
+    <button (click)="onsave(houseName,housePassword)">save</button>
+        
+</p-dialog>
+
+<button *ngIf="!house" type="button" (click)="showDialogCreateHouse()" icon="pi pi-info-circle" label="Show">Add New House</button>
+<br>
+<p-dialog header="Join Existing House" [(visible)]="displayJoin">
+    <div>
+        <label for="name">House Name</label>
+        <input type="text" #houseName>
+    </div>
+    <div>
+        <label for="name">House password</label>
+        <input type="text" #housePassword>
+    </div>
+    <button (click)="onjoin(houseName,housePassword)">join</button>
+</p-dialog>
+
+<button *ngIf="!house" type="button" (click)="showDialogJoinHouse()" icon="pi pi-info-circle" label="Show">Join Existing House</button>
+
+
+<p-card *ngIf="house">
+    <p-header>
+        {{house.houseName}}
+    </p-header>
+    <ul>
+        <li *ngFor="let groceryList of groceryLists" (click)="method(groceryList)">{{groceryList.dt_created}}</li>
+        <!-- <li *ngFor="let groceryList of groceryLists" (click)="method(groceryList.name)">{{groceryList}}</li> -->
+    </ul>
+    <p-footer>
+        <button type="button" (click)="createNewGroceryList()" icon="pi pi-info-circle" label="Show">Create new GroceryList</button>
+    </p-footer>
+</p-card>

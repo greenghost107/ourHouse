@@ -3,12 +3,10 @@
  */
 package com.greenghost107.ourHouse.service;
 
-import com.greenghost107.ourHouse.dto.UserDto;
-
 import com.greenghost107.ourHouse.model.security.JwtRequest;
+import com.greenghost107.ourHouse.model.security.Role;
 import com.greenghost107.ourHouse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,12 +25,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		if ("javainuse".equals(username)) {
-//			return new User("javainuse", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
-//					new ArrayList<>());
-//		} else {
-//			throw new UsernameNotFoundException("User not found with username: " + username);
-//		}
 		com.greenghost107.ourHouse.model.User user = userRepository.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with username: " + username);
@@ -45,6 +37,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 		com.greenghost107.ourHouse.model.User newUser = new com.greenghost107.ourHouse.model.User();
 		newUser.setUsername(jwtRequest.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(jwtRequest.getPassword()));
+		if (jwtRequest.getRole()==null)
+			newUser.setRole(Role.ROLE_USER);
+		else
+			newUser.setRole(jwtRequest.getRole());
 		return userRepository.save(newUser);
 	}
 }

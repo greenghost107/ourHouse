@@ -1,7 +1,7 @@
 /*
  * Created by greenghost107 on Sep/2020
  */
-package com.greenghost107.ourHouse.web;
+package com.greenghost107.ourHouse.web.swagger;
 
 import com.greenghost107.ourHouse.dto.HouseDto;
 import com.greenghost107.ourHouse.dto.UserDto;
@@ -10,7 +10,6 @@ import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.service.HouseService;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/house")
-public class HouseController {
+@RequestMapping("/houses")
+public class HouseSwaggerController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired

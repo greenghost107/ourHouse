@@ -1,7 +1,7 @@
 /*
  * Created by greenghost107 on Sep/2020
  */
-package com.greenghost107.ourHouse.web;
+package com.greenghost107.ourHouse.web.swagger;
 
 import com.greenghost107.ourHouse.dto.GroceryDto;
 import com.greenghost107.ourHouse.dto.GroceryListDto;
@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/groceries")
-public class GroceryListController {
+public class GroceryListSwaggerController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired

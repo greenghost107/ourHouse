@@ -19,6 +19,8 @@ public interface HouseService {
 	
 	House createNewGroceryList(UserDto userDto,HouseDto houseDto);
 	
+	House createNewGroceryList(HouseDto houseDto,String creatorName);
+	
 	Set<User> getUsersForHouse(HouseDto houseDto);
 	
 //	GroceryList getLastGroceryListForHouse(HouseDto houseDto,UserDto userDto);
@@ -26,4 +28,10 @@ public interface HouseService {
 	List<String> getAllGroceryListNamesForHouse(HouseDto houseDto);
 	
 	Boolean removeGroceryListForHouseByName(HouseDto houseDto,Long listId);
+	
+	House getHouseForUser(String userName);
+	
+	boolean validatePassword(House house, String password);
+	
+	House addUserToHouse(House house,User joiningUser);
 }
