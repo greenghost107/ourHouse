@@ -3,22 +3,14 @@
  */
 package com.greenghost107.ourHouse.web.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenghost107.ourHouse.config.JwtTokenUtil;
-import com.greenghost107.ourHouse.dto.HouseDto;
-import com.greenghost107.ourHouse.dto.UserDto;
-import com.greenghost107.ourHouse.model.House;
-import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.model.security.JwtRequest;
 import com.greenghost107.ourHouse.model.security.JwtResponse;
 import com.greenghost107.ourHouse.service.HouseService;
-import com.greenghost107.ourHouse.service.JwtUserDetailsService;
+import com.greenghost107.ourHouse.service.impl.JwtUserDetailsServiceImpl;
 import com.greenghost107.ourHouse.service.UserService;
 import io.jsonwebtoken.impl.DefaultClaims;
-import org.apache.tomcat.util.json.JSONParser;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -30,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = { "*"})
@@ -43,7 +34,7 @@ public class JwtAuthenticationController {
 	private JwtTokenUtil jwtTokenUtil;
 	
 	@Autowired
-	private JwtUserDetailsService userDetailsService;
+	private JwtUserDetailsServiceImpl userDetailsService;
 	
 	@Autowired
 	private UserService userService;

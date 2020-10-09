@@ -5,6 +5,7 @@ export class User {
     username: string;
     password: string;
     houseId: number;
+    token: string;
 
 
     constructor(username:string)

@@ -1,7 +1,7 @@
 /*
  * Created by greenghost107 on Oct/2020
  */
-package com.greenghost107.ourHouse.service;
+package com.greenghost107.ourHouse.service.impl;
 
 import com.greenghost107.ourHouse.model.security.JwtRequest;
 import com.greenghost107.ourHouse.model.security.Role;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class JwtUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 	

@@ -46,7 +46,7 @@ public class HouseSwaggerController {
 	public ResponseEntity<House> createNewShoppingList(UserDto userDto ,HouseDto houseDto) {
 		LOGGER.info("create new shopping list");
 		//if house field is empty nukk pointer exception
-		return Optional.ofNullable(houseService.createNewGroceryList(userDto,houseDto))
+		return Optional.ofNullable(houseService.createNewGroceryList(houseDto,userDto.getusername()))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Can't add House"));
 	}

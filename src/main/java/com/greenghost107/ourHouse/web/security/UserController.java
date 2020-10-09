@@ -39,49 +39,27 @@ public class UserController {
 	
 	@RequestMapping(value = "/setHouse", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> setHouseForUser(HttpServletRequest request) throws Exception {
-		// From the HttpRequest get the claims
-
 		
-		String username = jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
-
-		String decReq = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-
-		JSONObject jsonObject = new JSONObject(decReq);
-
-		JSONObject houseJson= jsonObject.getJSONObject("house");
-
-		
-		return Optional.ofNullable(userService.joinHouse(username,houseJson.getString("houseName"),houseJson.getString("housePassword")))
+		return Optional.ofNullable(userService.joinHouse(request))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
-				.orElseThrow(() -> new SpringException("Couldn't create house for user " + username));
+				.orElseThrow(() -> new SpringException("Couldn't create house for user "));
 	}
 	
 	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
-	public ResponseEntity<?> getUser(HttpServletRequest request) throws Exception {
-		String username = jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
+	public ResponseEntity<?> getUser(HttpServletRequest request) {
 
-		return Optional.ofNullable(userService.findByUserName(username))
-				.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))
-				.orElseThrow(() -> new SpringException("Couldn't create house for user " + username));
+		return Optional.ofNullable(userService.findByUserName(request))
+		.map(usr -> new ResponseEntity<>(usr, HttpStatus.OK))
+				.orElseThrow(() -> new SpringException("Couldn't create house for user "));
 	}
 	
 	
 	@RequestMapping(value = "/createHouse", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createHouse(HttpServletRequest request) throws Exception {
-
+	public ResponseEntity<?> createHouse(HttpServletRequest request)  {
 		
-		
-		String username = jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
-
-		String decReq = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-
-		JSONObject jsonObject = new JSONObject(decReq);
-
-		JSONObject houseJson= jsonObject.getJSONObject("house");
-		
-		return Optional.ofNullable(userService.createHouseForUser(username,houseJson.getString("houseName"),houseJson.getString("housePassword")))
+		return Optional.ofNullable(userService.createHouseForUser(request))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
-				.orElseThrow(() -> new SpringException("Couldn't create house for user " + username));
+				.orElseThrow(() -> new SpringException("Couldn't create house for user "));
 		
 	}
 	

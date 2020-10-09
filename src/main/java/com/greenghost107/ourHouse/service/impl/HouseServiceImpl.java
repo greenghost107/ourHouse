@@ -3,6 +3,7 @@
  */
 package com.greenghost107.ourHouse.service.impl;
 
+import com.greenghost107.ourHouse.config.JwtTokenUtil;
 import com.greenghost107.ourHouse.dto.HouseDto;
 import com.greenghost107.ourHouse.dto.UserDto;
 import com.greenghost107.ourHouse.model.GroceryList;
@@ -12,15 +13,20 @@ import com.greenghost107.ourHouse.repository.HouseRepository;
 import com.greenghost107.ourHouse.repository.UserRepository;
 import com.greenghost107.ourHouse.service.GroceryListService;
 import com.greenghost107.ourHouse.service.HouseService;
+import com.greenghost107.ourHouse.service.HttpServletRequestService;
+import org.json.JSONObject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class HouseServiceImpl implements HouseService {
@@ -34,23 +40,31 @@ public class HouseServiceImpl implements HouseService {
 	@Autowired
 	private GroceryListService groceryListService;
 	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+	private HttpServletRequestService httpServletRequestService;
+	
 	@Override
 	public House addHouse(House house) {
 		return houseRepository.save(house);
 	}
 	
 	@Override
-	public House createNewGroceryList(UserDto userDto,HouseDto houseDto)
-	{
-		Optional<House> optHouse = houseRepository.findByHouseName(houseDto.getHouseName());
+	public House createNewGroceryList(HttpServletRequest request) {
+		String userName = httpServletRequestService.getUserNameFromRequest(request);
 		
-		if (!optHouse.isPresent() && !optHouse.get().createNewGroceryList(userDto.getusername()))
+		Optional<House> optHouse = httpServletRequestService.getHouseFromJson(request);
+		
+		if (!optHouse.isPresent() && !optHouse.get().createNewGroceryList(userName))
 		{
 			return null;
 		}
 		return houseRepository.save(optHouse.get());
 		
 	}
+
 	
 	@Override
 	public House createNewGroceryList(HouseDto houseDto,String creatorName) {
@@ -111,6 +125,13 @@ public class HouseServiceImpl implements HouseService {
 		
 		groceryLists =  house.getGroceryList();
 		return groceryLists.size()+1 == origSize;
+	}
+	
+	@Override
+	public House getHouseForUser(HttpServletRequest request) {
+		String userName = httpServletRequestService.getUserNameFromRequest(request);
+		User user = userRepository.findByUsername(userName);
+		return houseRepository.findById(user.getHouse().getId()).get();
 	}
 	
 	@Override
