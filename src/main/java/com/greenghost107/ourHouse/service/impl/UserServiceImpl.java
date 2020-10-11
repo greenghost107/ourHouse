@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
 		{
 			LOGGER.error("Couldn't create object with the credentials");
 		}
+		//TODO handle Exception
 		house = houseService.addHouse(house);
 		user.setHouse(house);
 		userRepository.save(user);
@@ -113,7 +114,12 @@ public class UserServiceImpl implements UserService {
 		if(houseService.validatePassword(house,password))
 		{
 			LOGGER.info("user " + joiningUserName + " joined house " + houseName);
-			return houseService.addUserToHouse(house,joiningUser);
+			if (houseService.addUserToHouse(house,joiningUser)==null)
+			{
+				LOGGER.error("Failed to save in db");
+				return null;
+			}
+			return house;
 		}
 		else
 		{
@@ -126,8 +132,10 @@ public class UserServiceImpl implements UserService {
 	public House joinHouse(HttpServletRequest request) {
 		String userName = httpServletRequestService.getUserNameFromRequest(request);
 		User joiningUser = userRepository.findByUsername(userName);
-		Optional<House> optHouse = httpServletRequestService.getHouseFromJson(request);
+		HttpServletRequest httpServletRequest = request;
 		House inputHouse = httpServletRequestService.createNewHouseFromJson(request,null);
+//		Optional<House> optHouse = httpServletRequestService.getHouseFromJson(httpServletRequest);
+		Optional<House> optHouse = houseService.findByHouseName(inputHouse.getHouseName());
 		
 		if(!optHouse.isPresent())
 		{
@@ -138,7 +146,13 @@ public class UserServiceImpl implements UserService {
 		if(houseService.validatePassword(house,inputHouse.getHousePassword()))
 		{
 			LOGGER.info("user " + userName + " joined house " + inputHouse.getHouseName());
-			return houseService.addUserToHouse(house,joiningUser);
+//			return houseService.addUserToHouse(house,joiningUser);
+			if (houseService.addUserToHouse(house,joiningUser)==null)
+			{
+				LOGGER.error("Failed to save in db");
+				return null;
+			}
+			return house;
 		}
 		else
 		{

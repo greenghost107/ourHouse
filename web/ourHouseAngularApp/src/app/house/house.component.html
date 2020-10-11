@@ -1,0 +1,57 @@
+<p-progressSpinner *ngIf="!finishedLoading"></p-progressSpinner>
+
+<div  *ngIf="finishedLoading">
+    
+        <p-dialog header="Create New House" [(visible)]="displayCreate">
+        <div>
+            <label for="name">House Name</label>
+            <input type="text" #houseName>
+        </div>
+        <div>
+            <label for="name">House password</label>
+            <input type="text" #housePassword>
+        </div>
+        <button (click)="onsave(houseName,housePassword)">save</button>
+    </p-dialog>
+
+    
+    <button *ngIf="!house" type="button" (click)="showDialogCreateHouse()" icon="pi pi-info-circle" label="Show">Add New House</button>
+    <br>
+    <p-dialog header="Join Existing House" [(visible)]="displayJoin">
+    <div *ngIf="displayJoin">
+        <div>
+            <label for="name">House Name</label>
+            <input type="text" #houseName>
+        </div>
+        <div>
+            <label for="name">House password</label>
+            <input type="text" #housePassword>
+        </div>
+        <button (click)="onjoin(houseName,housePassword)">join</button>
+    </div>
+    </p-dialog>
+
+    <button *ngIf="!house" type="button" (click)="showDialogJoinHouse()" icon="pi pi-info-circle" label="Show">Join Existing House</button>
+
+
+    <p-card *ngIf="house">
+    <div *ngIf="house">
+        <p-header>
+            {{house.houseName}}
+        </p-header>
+        <ul>
+            <li *ngFor="let groceryList of groceryLists" (click)="getGroceryList(groceryList.id); op.toggle($event)">{{groceryList.dt_created}}</li>
+            <!-- <li *ngFor="let groceryList of groceryLists" (click)="method(groceryList.name)">{{groceryList}}</li> -->
+        </ul>
+        <p-footer>
+            <button type="button" (click)="createNewGroceryList()" icon="pi pi-info-circle" label="Show">Create new GroceryList</button>
+        </p-footer>
+    </div>
+    </p-card>
+
+    <p-overlayPanel #op>
+        <ng-template pTemplate>
+            <app-grocerylist [id]="selectedGorceryListId"></app-grocerylist>
+        </ng-template>
+    </p-overlayPanel>
+</div>

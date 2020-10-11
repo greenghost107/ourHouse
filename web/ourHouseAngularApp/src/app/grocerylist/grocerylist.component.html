@@ -1,0 +1,24 @@
+<p-progressSpinner *ngIf="!finishedLoading"></p-progressSpinner>
+<div  *ngIf="finishedLoading">
+<div><Title></Title> here</div>
+<ul>
+    <li *ngFor="let grocery of groceryList">{{grocery.name}} {{grocery.quantity}}</li>
+</ul>
+<br>
+<div>
+    <div>
+        <label for="name">Grocery Name</label>
+        <input type="text" #groceryNameInput>
+    </div>
+    <div>
+        <label for="name">quantity</label>
+        <input type="text" #quantityInput>
+    </div>
+    <!-- <button (click)="onsave(houseName,housePassword)">Add Grocery</button> -->
+    <button (click)="addGrocery(groceryNameInput,quantityInput)">Add Grocery</button>
+</div>
+<br><br>
+<div>
+    <button (click)="saveGroceryList()">Save Grocery List</button>
+</div>
+</div>

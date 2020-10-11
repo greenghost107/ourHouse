@@ -3,7 +3,7 @@ import { first } from 'rxjs/operators';
 
 import { GroceryList, User } from '@/_models';
 import { House } from '@/_models';
-import { HouseService,UserService, AuthenticationService } from '@/_services';
+import { GroceryListService,HouseService,UserService, AuthenticationService } from '@/_services';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
@@ -13,11 +13,13 @@ export class HomeComponent implements OnInit {
     displayCreate: boolean = false;
     displayJoin: boolean = false;
     groceryLists = [];
+    selectedGorceryListId: number;
 
     constructor(
         private authenticationService: AuthenticationService,
         private userService: UserService,
-        private houseService: HouseService
+        private houseService: HouseService,
+        private groceryListService: GroceryListService
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
         // this.refreshUser().subscribe((user)=>this.currentUser.houseId=user.houseId);
@@ -52,7 +54,7 @@ export class HomeComponent implements OnInit {
         this.refreshHouse().subscribe((house)=>{
             this.house=house;
             this.refreshGroceryLists().subscribe((groceryLists)=>{
-                console.log(groceryLists);
+                // console.log(groceryLists);
                 this.groceryLists=groceryLists;
             });
         });
@@ -118,6 +120,15 @@ export class HomeComponent implements OnInit {
     {
         // console.log(this.house.id);
         return this.houseService.getGroceryListsForHouseId(this.house.id);
+    }
+
+    getGroceryList(id:number)
+    {
+        
+        // return this.groceryListService.getGrocerysForId(id).subscribe((data)=>{
+        //     console.log(data);
+        // });
+        this.selectedGorceryListId = id;
     }
     // deleteUser(id: number) {
     //     this.userService.delete(id)

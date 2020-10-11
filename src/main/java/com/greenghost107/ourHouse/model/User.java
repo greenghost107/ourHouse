@@ -22,7 +22,7 @@ public class User {
 	@JsonIgnore
 	private String password;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "user_house")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="house_id",referencedColumnName="id")
 	private House house;

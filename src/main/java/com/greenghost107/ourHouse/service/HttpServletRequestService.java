@@ -3,10 +3,12 @@
  */
 package com.greenghost107.ourHouse.service;
 
+import com.greenghost107.ourHouse.model.Grocery;
 import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.model.User;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 public interface HttpServletRequestService {
@@ -16,4 +18,6 @@ public interface HttpServletRequestService {
 	Optional<House> getHouseFromJson(HttpServletRequest request);
 	
 	House createNewHouseFromJson(HttpServletRequest request, User user);
+	
+	List<Grocery> getArrayOfGroceries(HttpServletRequest request);
 }

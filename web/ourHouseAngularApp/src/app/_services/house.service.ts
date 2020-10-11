@@ -30,7 +30,7 @@ export class HouseService {
     {
         // console.log(houseId);
         // console.log('http://localhost:8080/house/createNewGroceryList/${houseId}');
-        return this.http.post<[GroceryList]>("http://localhost:8080/house/createNewGroceryList" ,{house},this.getHttpPostOptions());
+        return this.http.post<GroceryList>("http://localhost:8080/house/createNewGroceryList" ,{house},this.getHttpPostOptions());
     }
 
     refreshHouse(user:User){

@@ -52,16 +52,17 @@ public class HouseServiceImpl implements HouseService {
 	}
 	
 	@Override
-	public House createNewGroceryList(HttpServletRequest request) {
+	public GroceryList createNewGroceryList(HttpServletRequest request) {
 		String userName = httpServletRequestService.getUserNameFromRequest(request);
 		
 		Optional<House> optHouse = httpServletRequestService.getHouseFromJson(request);
 		
-		if (!optHouse.isPresent() && !optHouse.get().createNewGroceryList(userName))
+		if (!optHouse.isPresent())
 		{
 			return null;
 		}
-		return houseRepository.save(optHouse.get());
+		//create the list and save it
+		return groceryListService.createNewGroceryListForHouse(optHouse.get(),userName);
 		
 	}
 
@@ -148,10 +149,23 @@ public class HouseServiceImpl implements HouseService {
 		return housePassword.equals(password);
 	}
 	
-	@Override
-	public House addUserToHouse(House house,User joiningUser) {
-		 return (house.addUser(joiningUser) ? houseRepository.save(house):null) ;
+//	@Override
+//	public House addUserToHouse(House house,User joiningUser) {
+//		 return (house.addUser(joiningUser) ? houseRepository.save(house):null) ;
+//
+//	}
 	
+	@Override
+	public User addUserToHouse(House house,User joiningUser) {
+		joiningUser.setHouse(house);
+		return userRepository.save(joiningUser);
+		
+	}
+	
+	@Override
+	public Optional<House> findByHouseName(String houseName) {
+		return houseRepository.findByHouseName(houseName);
+		
 	}
 	
 }

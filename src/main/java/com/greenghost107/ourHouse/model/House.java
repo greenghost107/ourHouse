@@ -24,11 +24,11 @@ public class House {
 //	//@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
 //	private User owner;
 	
-	@JsonBackReference
+	@JsonBackReference("house_users")
 	@OneToMany(mappedBy="house",cascade=CascadeType.ALL)
 	private Set<User> users;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "house_groceryList")
 	@OneToMany(mappedBy="house",cascade=CascadeType.ALL)
 	private List<GroceryList> groceryList;
 	
@@ -46,6 +46,11 @@ public House(String name,String housePassword, User user) {
 	this.housePassword = housePassword;
 	this.groceryList = new ArrayList<>();
 }
+	
+	public House(String houseName, String housePassword) {
+		this.houseName = houseName;
+		this.housePassword = housePassword;
+	}
 	
 	public Long getId() {
 		return id;

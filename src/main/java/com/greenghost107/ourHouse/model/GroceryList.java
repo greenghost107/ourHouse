@@ -24,7 +24,7 @@ public class GroceryList implements Serializable {
 	
 	private String creatorName;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "groceryList_house")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="house_id",referencedColumnName="id")
 	private House house;

@@ -18,11 +18,9 @@ public class Grocery implements Serializable {
 	
 	private double quantity;
 	
-	private String url;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "groceryList-id")
 	@ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
-
 	private GroceryList groceryList;
 	
 	public Grocery(){}
@@ -30,13 +28,16 @@ public class Grocery implements Serializable {
 	public Grocery(String name) {
 		this.name = name;
 		this.quantity = 0;
-		this.url = null;
 	}
 	
-	public Grocery(String name, double quantity, String url,GroceryList groceryList) {
+	public Grocery(String name, double quantity) {
 		this.name = name;
 		this.quantity = quantity;
-		this.url = url;
+	}
+	
+	public Grocery(String name, double quantity, GroceryList groceryList) {
+		this.name = name;
+		this.quantity = quantity;
 		this.groceryList = groceryList;
 	}
 	
@@ -57,11 +58,11 @@ public class Grocery implements Serializable {
 		this.quantity = quantity;
 	}
 	
-	public String getUrl() {
-		return url;
+	public GroceryList getGroceryList() {
+		return groceryList;
 	}
 	
-	public void setUrl(String url) {
-		this.url = url;
+	public void setGroceryList(GroceryList groceryList) {
+		this.groceryList = groceryList;
 	}
 }

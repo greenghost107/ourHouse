@@ -11,9 +11,11 @@ import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.repository.GroceryListRepository;
 import com.greenghost107.ourHouse.service.GroceryListService;
 import com.greenghost107.ourHouse.service.GroceryService;
+import com.greenghost107.ourHouse.service.HttpServletRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +30,8 @@ public class GroceryListServiceImpl implements GroceryListService {
 	@Autowired
 	private GroceryService groceryService;
 	
+	
+	
 	@Override
 	public GroceryList addGrocery(GroceryListDto groceryListDto,GroceryDto groceryDto)
 	{
@@ -37,7 +41,7 @@ public class GroceryListServiceImpl implements GroceryListService {
 		if(!optgroceryList.isPresent())
 			return null;
 		GroceryList groceryList = optgroceryList.get();
-		Grocery grocery = groceryService.addGrocery(groceryDto.getName(),groceryDto.getQuantity(),groceryDto.getUrl(),groceryList);
+		Grocery grocery = groceryService.addGrocery(groceryDto.getName(),groceryDto.getQuantity(),groceryList);
 		groceryList.addGroceryToList(grocery);
 		groceryListRepository.save(groceryList);
 		
@@ -73,5 +77,21 @@ public class GroceryListServiceImpl implements GroceryListService {
 	{
 		return groceryListRepository.save(groceryList);
 	}
-
+	
+	@Override
+	public List<Grocery> saveGroceryList(HttpServletRequest request, Long groceryListId) {
+		Optional<GroceryList> optGroceryList = groceryListRepository.findById(groceryListId);
+		if (!optGroceryList.isPresent())
+		{
+			return Collections.EMPTY_LIST;
+		}
+		GroceryList groceryList = optGroceryList.get();
+		return groceryService.saveGroceries(request,groceryList);
+	}
+	
+	@Override
+	public GroceryList createNewGroceryListForHouse(House house, String creator) {
+		return groceryListRepository.save(new GroceryList(house,creator));
+	}
+	
 }

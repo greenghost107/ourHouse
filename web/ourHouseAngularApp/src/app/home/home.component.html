@@ -9,7 +9,7 @@
 </ul> -->
 <h4>houseName</h4>
 
-<p-dialog header="Create New House" [(visible)]="displayCreate">
+<!-- <p-dialog header="Create New House" [(visible)]="displayCreate">
     <div>
         <label for="name">House Name</label>
         <input type="text" #houseName>
@@ -44,10 +44,23 @@
         {{house.houseName}}
     </p-header>
     <ul>
-        <li *ngFor="let groceryList of groceryLists" (click)="method(groceryList)">{{groceryList.dt_created}}</li>
-        <!-- <li *ngFor="let groceryList of groceryLists" (click)="method(groceryList.name)">{{groceryList}}</li> -->
+        <li *ngFor="let groceryList of groceryLists" (click)="getGroceryList(groceryList.id); op.toggle($event)">{{groceryList.dt_created}}</li>
     </ul>
     <p-footer>
         <button type="button" (click)="createNewGroceryList()" icon="pi pi-info-circle" label="Show">Create new GroceryList</button>
     </p-footer>
+</p-card> -->
+<!-- <p-overlayPanel #op>
+    <ng-template pTemplate>
+        <app-grocerylist [id]="selectedGorceryListId"></app-grocerylist>
+    </ng-template>
+</p-overlayPanel> -->
+<p-card #house>
+    <ng-template pTemplate>
+        <app-house [user]="currentUser"></app-house>
+    </ng-template>
 </p-card>
+
+
+
+<!-- <button type="text" pButton label="Basic" (click)="op.t1oggle($event)"></button> -->

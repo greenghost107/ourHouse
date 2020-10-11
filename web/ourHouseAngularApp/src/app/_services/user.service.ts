@@ -21,18 +21,7 @@ export class UserService {
     // }
 
     joinUserToHouse(user: User,house: House){
-        // let  headers = new HttpHeaders();
         const token = 'Bearer ' +localStorage.getItem("access_token");
-        // console.log(token);
-
-        // headers = headers.set("Authorization",token );
-        // headers = headers.set("Content-Type","application/json");
-
-
-        // console.log(headers.get("Authorization"));
-        // headers = headers.set("Access-Control-Allow-Origin","*");
-        // headers = headers.set("Access-Control-Expose-Headers","Authorization");
-        // headers = headers.set("Access-Control-Allow-Headers","Authorization");
         return this.http.post(`http://localhost:8080/user/setHouse`, {house},this.getHttpPostOptions());
     }
 
