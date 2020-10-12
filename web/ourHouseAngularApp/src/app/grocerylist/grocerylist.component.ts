@@ -33,8 +33,14 @@ export class GrocerylistComponent implements OnInit {
 
   saveGroceryList()
   {
+    if(this.toSave.length>0)
+    {
     this.groceryListService.saveGroceryList(this.toSave,this.id).subscribe(()=>{});
     console.log("finished saving");
+    }
+    else{
+      console.log("nothing to save");
+    }
   }
 
 }

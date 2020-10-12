@@ -6,6 +6,8 @@ package com.greenghost107.ourHouse.web.security;
 import com.greenghost107.ourHouse.exceptions.SpringException;
 import com.greenghost107.ourHouse.service.GroceryListService;
 import com.greenghost107.ourHouse.service.GroceryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +23,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/groceryList")
 public class GroceryListController {
-	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private GroceryListService groceryListService;
 	
@@ -31,6 +33,7 @@ public class GroceryListController {
 	@RequestMapping(value = "/{groceryListId}", method = RequestMethod.GET)
 	public ResponseEntity<?> getGroceryListsForHouse(@PathVariable( "groceryListId" ) Long groceryListId)
 	{
+		LOGGER.debug("getGroceryListsForHouse " + groceryListId);
 		return Optional.ofNullable(groceryService.getByGroceryListId(groceryListId))
 				.map(grocLst -> new ResponseEntity<>(grocLst, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Couldn't get groceries for grocerylist with id +" + groceryListId));
@@ -39,7 +42,7 @@ public class GroceryListController {
 	
 	@RequestMapping(value = "/saveGroceryList/{groceryListId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> saveGroceryList(@PathVariable( "groceryListId" ) Long groceryListId,HttpServletRequest request) {
-		
+		LOGGER.debug("saveGroceryList " + groceryListId);
 		return Optional.ofNullable(groceryListService.saveGroceryList(request,groceryListId))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("can't save the grocerylist"));

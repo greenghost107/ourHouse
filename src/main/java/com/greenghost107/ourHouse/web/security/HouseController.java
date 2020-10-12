@@ -40,7 +40,7 @@ public class HouseController {
 	@RequestMapping(value = "/getHouse" , method = RequestMethod.GET)
 	public ResponseEntity<?> getHouse(HttpServletRequest request)
 	{
-
+		LOGGER.debug("getHouse" );
 		return Optional.ofNullable(houseService.getHouseForUser(request))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Can't find house for user"));
@@ -48,7 +48,7 @@ public class HouseController {
 	
 	@RequestMapping(value = "/getGroceryLists/{houseId}", method = RequestMethod.GET)
 	public ResponseEntity<?> getGroceryListsForHouse(@PathVariable( "houseId" ) Long houseId)
-	{
+	{LOGGER.debug("getGroceryLists for houseId " + houseId);
 		return Optional.ofNullable(groceryListService.getGroceryListByHouseId(houseId))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Couldn't get GroceryLists for house " + houseId));
@@ -57,7 +57,7 @@ public class HouseController {
 	
 	@RequestMapping(value = "/createNewGroceryList", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createNewGroceryList(HttpServletRequest request) {
-		
+		LOGGER.debug("createNewGroceryList" );
 		return Optional.ofNullable(houseService.createNewGroceryList(request))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Couldn't create GroceryList for house "));

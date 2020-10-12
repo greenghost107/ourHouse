@@ -17,7 +17,7 @@ mysql 8+
 node
 
 ## Setup
-within application.properties, change <your-db-name>,<your-user>,<your-password>
+within application.properties, change your-db-name,your-user,your-password
 
 ```
 spring.datasource.url=jdbc:mysql://localhost:3306/<your-db-name>?useSSL=false

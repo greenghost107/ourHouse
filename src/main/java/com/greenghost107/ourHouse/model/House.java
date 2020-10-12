@@ -14,7 +14,7 @@ public class House {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	@Column(unique = true)
 	private String houseName;
 	
 	private String housePassword;
