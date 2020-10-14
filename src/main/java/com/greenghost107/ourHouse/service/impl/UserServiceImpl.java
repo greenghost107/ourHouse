@@ -5,21 +5,17 @@ package com.greenghost107.ourHouse.service.impl;
 
 import com.greenghost107.ourHouse.config.JwtTokenUtil;
 import com.greenghost107.ourHouse.dto.HouseDto;
-import com.greenghost107.ourHouse.dto.UserDto;
 import com.greenghost107.ourHouse.model.House;
 import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.repository.HouseRepository;
 import com.greenghost107.ourHouse.repository.UserRepository;
 import com.greenghost107.ourHouse.service.HouseService;
-import com.greenghost107.ourHouse.service.HttpServletRequestService;
 import com.greenghost107.ourHouse.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,62 +30,21 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private HouseService houseService;
-	
+
 	@Autowired
-	private HttpServletRequestService httpServletRequestService;
-	
+	private JwtTokenUtil jwtTokenUtil;
+
+
 	@Override
-	public User saveUser(UserDto userDto) {
-		return userRepository.save(new User(userDto.getusername()));
-	}
-	
-	@Override
-	public User findByUserName(HttpServletRequest request) {
-		String userName = httpServletRequestService.getUserNameFromRequest(request);
+	public User findByUserName(String userName) {
 		return userRepository.findByUsername(userName);
 	}
-	
-	
-	@Override
-	public List<User> findAllUsers()
-	{
-	return userRepository.findAll();
-	}
-	
-	@Override
-	public User joinUserToHouse(UserDto userDto,HouseDto houseDto)
-	{
-		User user = userRepository.findByUsername(userDto.getusername());
-		Optional<House> opthouse = houseRepository.findByHouseName(houseDto.getHouseName());
-		House house = (opthouse.isPresent()?opthouse.get():houseService.addHouse(new House(houseDto.getHouseName(), "",user)));
 
-		user.setHouse(house);
-		return userRepository.save(user);
-	}
-	
-	@Override
-	public House createHouseForUser(HttpServletRequest request) {
-		String userName = httpServletRequestService.getUserNameFromRequest(request);
-		User user = userRepository.findByUsername(userName);
-		//TODO validate houseName
-		//TODO handle password
-		House house = httpServletRequestService.createNewHouseFromJson(request,user);
-		if(house==null)
-		{
-			LOGGER.error("Couldn't create object with the credentials");
-		}
-		//TODO handle Exception
-		house = houseService.addHouse(house);
-		user.setHouse(house);
-		userRepository.save(user);
-		return house;
-	}
-	
 	@Override
 	public House getHouseForUser() {
 		return null;
 	}
-	
+
 	@Override
 	public House createHouseForUser(String userName, String houseName, String housePassword) {
 		User user = userRepository.findByUsername(userName);
@@ -127,26 +82,48 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 	}
-	
+
 	@Override
-	public House joinHouse(HttpServletRequest request) {
-		String userName = httpServletRequestService.getUserNameFromRequest(request);
+	public House createHouseForUser(String token, HouseDto houseDto) {
+		String userName = jwtTokenUtil.getUserNameFromBearerToken(token);
+		User user = userRepository.findByUsername(userName);
+		//TODO validate houseName
+		//TODO handle password
+		Optional<House> optHouse = houseService.findByHouseName(houseDto.getHouseName());
+		if(optHouse.isPresent())
+		{
+			LOGGER.error("House with name " + houseDto.getHouseName() + " already exists");
+			return null;
+		}
+		House house = houseService.addHouse(new House(houseDto.getHouseName(),houseDto.getHousePassword()));
+		user.setHouse(house);
+		userRepository.save(user);
+		return house;
+
+
+	}
+
+	@Override
+	public User findUserFromToken(String token) {
+		String userName = jwtTokenUtil.getUserNameFromBearerToken(token);
+		return userRepository.findByUsername(userName);
+	}
+
+	@Override
+	public House joinHouse(String token, HouseDto houseDto) {
+		String userName = jwtTokenUtil.getUserNameFromBearerToken(token);
 		User joiningUser = userRepository.findByUsername(userName);
-		HttpServletRequest httpServletRequest = request;
-		House inputHouse = httpServletRequestService.createNewHouseFromJson(request,null);
-//		Optional<House> optHouse = httpServletRequestService.getHouseFromJson(httpServletRequest);
-		Optional<House> optHouse = houseService.findByHouseName(inputHouse.getHouseName());
-		
+		Optional<House> optHouse = houseService.findByHouseName(houseDto.getHouseName());
+
 		if(!optHouse.isPresent())
 		{
-			LOGGER.error("no house with the name " + inputHouse.getHouseName());
+			LOGGER.error("no house with the name " + houseDto.getHouseName());
 			return null;
 		}
 		House house = optHouse.get();
-		if(houseService.validatePassword(house,inputHouse.getHousePassword()))
+		if(houseService.validatePassword(house,houseDto.getHousePassword()))
 		{
-			LOGGER.info("user " + userName + " joined house " + inputHouse.getHouseName());
-//			return houseService.addUserToHouse(house,joiningUser);
+			LOGGER.info("user " + userName + " joined house " + houseDto.getHouseName());
 			if (houseService.addUserToHouse(house,joiningUser)==null)
 			{
 				LOGGER.error("Failed to save in db");
@@ -156,10 +133,11 @@ public class UserServiceImpl implements UserService {
 		}
 		else
 		{
-			LOGGER.error("couldn't join user " + userName + " to house " + inputHouse.getHouseName() + " password incorrect");
+			LOGGER.error("couldn't join user " + userName + " to house " + houseDto.getHouseName() + " password incorrect");
 		}
 		return null;
-		
 	}
-	
+
+
+
 }

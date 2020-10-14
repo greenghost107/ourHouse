@@ -18,7 +18,7 @@ export class GroceryListService {
 
     saveGroceryList(groceryList: Grocery[],id:number)
     {
-        return this.http.post<Grocery[]>("http://localhost:8080/groceryList/saveGroceryList/" + id,{groceryList},this.getHttpPostOptions());
+        return this.http.post<Grocery[]>("http://localhost:8080/groceryList/saveGroceryList/" + id,groceryList,this.getHttpPostOptions());
     }
 
     getHttpPostOptions() {

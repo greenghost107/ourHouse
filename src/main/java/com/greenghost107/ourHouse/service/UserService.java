@@ -12,22 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserService {
-	
-	User saveUser(UserDto userDto);
-	
-	User findByUserName(HttpServletRequest request);
-	
-	List<User> findAllUsers();
-	
-	User joinUserToHouse(UserDto userDto,HouseDto houseDto);
-	
-	House createHouseForUser(HttpServletRequest request);
+
+	User findByUserName(String userName);
 	
 	House getHouseForUser();
 	
 	House createHouseForUser(String userName,String houseName,String housePassword);
-	
+
 	House joinHouse(String joiningUserName,String  houseName,String password);
-	
-	House joinHouse(HttpServletRequest request);
+
+	House createHouseForUser(String token, HouseDto houseDto);
+
+	User findUserFromToken(String token);
+
+	House joinHouse(String token, HouseDto houseDto);
 }

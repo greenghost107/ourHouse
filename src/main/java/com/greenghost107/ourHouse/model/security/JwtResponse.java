@@ -6,15 +6,21 @@ package com.greenghost107.ourHouse.model.security;
 import java.io.Serializable;
 
 public class JwtResponse implements Serializable {
-	
-	private static final long serialVersionUID = -8091879091924046844L;
+
 	private final String jwttoken;
+
+	private final String jwtRefreshtoken;
 	
-	public JwtResponse(String jwttoken) {
+	public JwtResponse(String jwttoken, String jwtRefreshtoken) {
 		this.jwttoken = jwttoken;
+		this.jwtRefreshtoken = jwtRefreshtoken;
 	}
 	
 	public String getToken() {
 		return this.jwttoken;
+	}
+
+	public String getJwtRefreshtoken() {
+		return jwtRefreshtoken;
 	}
 }

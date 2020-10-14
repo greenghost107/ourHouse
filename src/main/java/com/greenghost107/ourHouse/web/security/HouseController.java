@@ -4,6 +4,7 @@
 package com.greenghost107.ourHouse.web.security;
 
 import com.greenghost107.ourHouse.config.JwtTokenUtil;
+import com.greenghost107.ourHouse.dto.GroceryListDto;
 import com.greenghost107.ourHouse.dto.HouseDto;
 import com.greenghost107.ourHouse.exceptions.SpringException;
 import com.greenghost107.ourHouse.model.GroceryList;
@@ -28,8 +29,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/house")
 public class HouseController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
 	
 	@Autowired
 	private HouseService houseService;
@@ -38,10 +37,10 @@ public class HouseController {
 	private GroceryListService groceryListService;
 	
 	@RequestMapping(value = "/getHouse" , method = RequestMethod.GET)
-	public ResponseEntity<?> getHouse(HttpServletRequest request)
+	public ResponseEntity<?> getHouse(@RequestHeader("Authorization") String token)
 	{
 		LOGGER.debug("getHouse" );
-		return Optional.ofNullable(houseService.getHouseForUser(request))
+		return Optional.ofNullable(houseService.getHouseForUser(token))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Can't find house for user"));
 	}
@@ -55,10 +54,10 @@ public class HouseController {
 		
 	}
 	
-	@RequestMapping(value = "/createNewGroceryList", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> createNewGroceryList(HttpServletRequest request) {
+	@RequestMapping(value = "/createNewGroceryList/{houseId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> createNewGroceryList(@RequestHeader("Authorization") String token,@PathVariable( "houseId" ) Long houseId, @RequestBody GroceryListDto groceryListDto) {
 		LOGGER.debug("createNewGroceryList" );
-		return Optional.ofNullable(houseService.createNewGroceryList(request))
+		return Optional.ofNullable(houseService.createNewGroceryList(token,houseId,groceryListDto))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("Couldn't create GroceryList for house "));
 	}

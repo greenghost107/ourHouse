@@ -49,4 +49,9 @@ export class AuthenticationService {
     {
         return this.currentUser;
     }
+
+    isTokenExpired(){
+        const token = 'Bearer ' +localStorage.getItem("access_token");
+        return this.helper.isTokenExpired(token);
+    }
 }

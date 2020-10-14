@@ -97,12 +97,12 @@ export class HomeComponent implements OnInit {
         
     }
     
-    createNewGroceryList()
-    {
-        // console.log(this.currentUser.houseId);
-        // console.log(this.house.id);
-        this.houseService.createNewGroceryList(this.house).subscribe(()=>{});
-    }
+    // createNewGroceryList()
+    // {
+    //     // console.log(this.currentUser.houseId);
+    //     // console.log(this.house.id);
+    //     this.houseService.createNewGroceryList(this.house).subscribe(()=>{});
+    // }
 
     refreshUser()
     {

@@ -26,11 +26,12 @@ export class HouseService {
         return this.http.get<[GroceryList]>("http://localhost:8080/house/getGroceryLists/" + houseId,this.getHttpGetOptions());
     }
 
-    createNewGroceryList(house:House)
+    createNewGroceryList(house:House,groceryList:GroceryList)
     {
+        
         // console.log(houseId);
         // console.log('http://localhost:8080/house/createNewGroceryList/${houseId}');
-        return this.http.post<GroceryList>("http://localhost:8080/house/createNewGroceryList" ,{house},this.getHttpPostOptions());
+        return this.http.post<GroceryList>("http://localhost:8080/house/createNewGroceryList/" + house.id,groceryList,this.getHttpPostOptions());
     }
 
     refreshHouse(user:User){

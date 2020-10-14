@@ -23,6 +23,8 @@ public class GroceryList implements Serializable {
 	private LocalDateTime dt_created;
 	
 	private String creatorName;
+	@Column(unique = true)
+	private String groceryListName;
 	
 	@JsonBackReference(value = "groceryList_house")
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -50,10 +52,12 @@ public class GroceryList implements Serializable {
 	
 	public GroceryList(){}
 	
-	public GroceryList(House house,String creatorName) {
+	public GroceryList(House house,String creatorName,String groceryListName) {
 		this.house = house;
 		this.dt_created = LocalDateTime.now();
 		this.creatorName = creatorName;
+		this.groceryListName = (groceryListName.isEmpty()?this.dt_created.toString():groceryListName);
+
 	}
 	
 	public GroceryList(Long id, LocalDateTime dt_created, House house) {
@@ -85,6 +89,14 @@ public class GroceryList implements Serializable {
 	
 	public List<Grocery> getGroceries() {
 		return groceries;
+	}
+
+	public String getGroceryListName() {
+		return groceryListName;
+	}
+
+	public void setGroceryListName(String groceryListName) {
+		this.groceryListName = groceryListName;
 	}
 }
 

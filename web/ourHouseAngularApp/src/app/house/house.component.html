@@ -40,11 +40,18 @@
             {{house.houseName}}
         </p-header>
         <ul>
-            <li *ngFor="let groceryList of groceryLists" (click)="getGroceryList(groceryList.id); op.toggle($event)">{{groceryList.dt_created}}</li>
+            <li *ngFor="let groceryList of groceryLists" (click)="getGroceryList(groceryList.id); op.toggle($event)">{{groceryList.groceryListName}}</li>
             <!-- <li *ngFor="let groceryList of groceryLists" (click)="method(groceryList.name)">{{groceryList}}</li> -->
         </ul>
         <p-footer>
-            <button type="button" (click)="createNewGroceryList()" icon="pi pi-info-circle" label="Show">Create new GroceryList</button>
+            <button type="button" (click)="displayGroceryListNameDialog()" icon="pi pi-info-circle" label="Show">Create new GroceryList</button>
+            <p-dialog header="Grocery List Name" [(visible)]="displayGroceryListName">
+                <div>
+                    <label for="name">Grocery List Name</label>
+                    <input type="text" #groceryListName>
+                </div>
+                <button (click)="createNewGroceryList(groceryListName)">save</button>
+            </p-dialog>
         </p-footer>
     </div>
     </p-card>

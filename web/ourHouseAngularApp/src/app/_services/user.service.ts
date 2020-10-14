@@ -22,15 +22,15 @@ export class UserService {
 
     joinUserToHouse(user: User,house: House){
         const token = 'Bearer ' +localStorage.getItem("access_token");
-        return this.http.post(`http://localhost:8080/user/setHouse`, {house},this.getHttpPostOptions());
+        return this.http.post(`http://localhost:8080/user/setHouse`, house,this.getHttpPostOptions());
     }
 
     createHouse(user: User,house: House){
-        return this.http.post(`http://localhost:8080/user/createHouse`, {house},this.getHttpPostOptions());
+        return this.http.post(`http://localhost:8080/user/createHouse`, house,this.getHttpPostOptions());
     }
 
     refreshUser(user:User){
-        const token = 'Bearer ' +localStorage.getItem("access_token");
+        const token = 'Bearer ' +localStorage.getItem("access_token"); 
         return this.http.get<User>("http://localhost:8080/user/getUser",this.getHttpGetOptions());
     }
 

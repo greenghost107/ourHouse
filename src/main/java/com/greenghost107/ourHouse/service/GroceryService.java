@@ -17,6 +17,6 @@ public interface GroceryService {
 	void deleteGrocery(Grocery grocery);
 	
 	List<Grocery> getByGroceryListId(Long id);
-	
-	List<Grocery> saveGroceries(HttpServletRequest request,GroceryList groceryList);
+
+	 List<Grocery> saveGroceries(List<Grocery> groceries,GroceryList groceryList);
 }

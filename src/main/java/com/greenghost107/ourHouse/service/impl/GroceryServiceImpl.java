@@ -7,7 +7,6 @@ import com.greenghost107.ourHouse.model.Grocery;
 import com.greenghost107.ourHouse.model.GroceryList;
 import com.greenghost107.ourHouse.repository.GroceryRepository;
 import com.greenghost107.ourHouse.service.GroceryService;
-import com.greenghost107.ourHouse.service.HttpServletRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +19,6 @@ public class GroceryServiceImpl implements GroceryService {
 	
 	@Autowired
 	private GroceryRepository groceryRepository;
-	
-	@Autowired
-	private HttpServletRequestService httpServletRequestService;
 	
 	@Override
 	public void removeGroceriesByGroceryListId(Long groceryListId) {
@@ -45,11 +41,11 @@ public class GroceryServiceImpl implements GroceryService {
 		return groceryRepository.findAllGroceriesByGroceryListId(id);
 		
 	}
-	
+
 	@Override
-	public List<Grocery> saveGroceries(HttpServletRequest request,GroceryList groceryList) {
-	List<Grocery> groceries = httpServletRequestService.getArrayOfGroceries(request);
-	groceries.forEach(g->g.setGroceryList(groceryList));
-	return groceryRepository.saveAll(groceries);
+	public List<Grocery> saveGroceries(List<Grocery> groceries, GroceryList groceryList) {
+		groceries.forEach(g->g.setGroceryList(groceryList));
+		return groceryRepository.saveAll(groceries);
 	}
+
 }

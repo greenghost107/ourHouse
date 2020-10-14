@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { House } from '@app/_models';
+import { GroceryList, House } from '@app/_models';
 import { HouseService, UserService } from '@app/_services';
 import {MessageService} from 'primeng/api';
 
@@ -16,6 +16,7 @@ export class HouseComponent implements OnInit {
   groceryLists = [];
   selectedGorceryListId: number;
   finishedLoading = false;
+  displayGroceryListName:boolean = false;
   
   constructor(private userService: UserService,private houseService: HouseService, private messageService: MessageService) { }
 
@@ -78,11 +79,17 @@ onsave(houseName,housePassword)
         
     }
 
-
-    createNewGroceryList()
+    displayGroceryListNameDialog(){
+      this.displayGroceryListName = true;
+    }
+    createNewGroceryList(groceryListName)
     {
-        this.houseService.createNewGroceryList(this.house).subscribe((groceryList)=>{
-          this.groceryLists.push(groceryList);
+      
+      let groceryList :GroceryList = new GroceryList("",null,groceryListName.value);
+      // groceryList.groceryListName = groceryListName.value;
+        this.houseService.createNewGroceryList(this.house,groceryList).subscribe((grceryList)=>{
+          this.groceryLists.push(grceryList);
+          this.displayGroceryListName = false;
         });
     }
 

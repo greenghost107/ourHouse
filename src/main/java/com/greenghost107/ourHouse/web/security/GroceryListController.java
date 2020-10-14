@@ -4,6 +4,7 @@
 package com.greenghost107.ourHouse.web.security;
 
 import com.greenghost107.ourHouse.exceptions.SpringException;
+import com.greenghost107.ourHouse.model.Grocery;
 import com.greenghost107.ourHouse.service.GroceryListService;
 import com.greenghost107.ourHouse.service.GroceryService;
 import org.slf4j.Logger;
@@ -12,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,9 +40,9 @@ public class GroceryListController {
 	}
 	
 	@RequestMapping(value = "/saveGroceryList/{groceryListId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> saveGroceryList(@PathVariable( "groceryListId" ) Long groceryListId,HttpServletRequest request) {
+	public ResponseEntity<?> saveGroceryList(@PathVariable( "groceryListId" ) Long groceryListId, @RequestBody List<Grocery> groceries) {
 		LOGGER.debug("saveGroceryList " + groceryListId);
-		return Optional.ofNullable(groceryListService.saveGroceryList(request,groceryListId))
+		return Optional.ofNullable(groceryListService.saveGroceries(groceries,groceryListId))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("can't save the grocerylist"));
 	}

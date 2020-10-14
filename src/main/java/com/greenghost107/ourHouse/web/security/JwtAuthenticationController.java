@@ -4,6 +4,7 @@
 package com.greenghost107.ourHouse.web.security;
 
 import com.greenghost107.ourHouse.config.JwtTokenUtil;
+import com.greenghost107.ourHouse.model.User;
 import com.greenghost107.ourHouse.model.security.JwtRequest;
 import com.greenghost107.ourHouse.model.security.JwtResponse;
 import com.greenghost107.ourHouse.service.HouseService;
@@ -54,10 +55,11 @@ public class JwtAuthenticationController {
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
-		
+		User user = userService.findByUserName(jwtRequest.getUsername());
 		UserDetails userdetails = userDetailsService.loadUserByUsername(jwtRequest.getUsername());
 		String token = jwtTokenUtil.generateToken(userdetails);
-		return ResponseEntity.ok(new JwtResponse(token));
+		String refreshToken = jwtTokenUtil.generateRefreshToken(user.getId());
+		return ResponseEntity.ok(new JwtResponse(token,refreshToken));
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -68,11 +70,11 @@ public class JwtAuthenticationController {
 	@RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
 	public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
 		// From the HttpRequest get the claims
-		DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
-		
-		Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
-		String token = jwtTokenUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
-		return ResponseEntity.ok(new JwtResponse(token));
+//		DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
+
+//		Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
+		String token = jwtTokenUtil.refreshToken(request);
+		return ResponseEntity.ok(new JwtResponse(token,""));
 	}
 	
 	public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {

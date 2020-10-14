@@ -72,13 +72,13 @@ public House(String name,String housePassword, User user) {
 		return users.add(user);
 	}
 	
-	public boolean createNewGroceryList(String creatorName)
+	public boolean createNewGroceryList(String creatorName,String groceryListName)
 	{
 		if (this.groceryList == null)
 		{
 			this.groceryList = new ArrayList<>();
 		}
-		return groceryList.add(new GroceryList(this,creatorName));
+		return groceryList.add(new GroceryList(this,creatorName,groceryListName));
 	}
 	
 	public List<GroceryList> getGroceryList() {

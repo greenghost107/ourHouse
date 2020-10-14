@@ -14,17 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface GroceryListService {
-	GroceryList addGrocery(GroceryListDto groceryListDto,GroceryDto groceryDto);
-	
-	GroceryList getGroceryListById(GroceryListDto groceryListDto);
-	
+
 	void removeGroceryList(GroceryList groceryList);
 	
 	List<GroceryList> getGroceryListByHouseId(Long houseId);
 	
 	GroceryList saveGroceryList(GroceryList groceryList);
-	
-	List<Grocery> saveGroceryList(HttpServletRequest request, Long groceryListId);
-	
-	GroceryList createNewGroceryListForHouse(House house, String creator);
+
+	List<Grocery> saveGroceries(List<Grocery> groceries,Long groceryListId);
+
+	GroceryList createNewGroceryListForHouse(House house, String creator,String groceryListName);
 }

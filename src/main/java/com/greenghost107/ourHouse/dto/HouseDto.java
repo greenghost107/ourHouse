@@ -7,7 +7,10 @@ public class HouseDto {
 	private Long id;
 	private String houseName;
 	private String housePassword;
-	
+
+	public HouseDto() {
+	}
+
 	public HouseDto(Long id, String houseName, String housePassword) {
 		this.id = id;
 		this.houseName = houseName;

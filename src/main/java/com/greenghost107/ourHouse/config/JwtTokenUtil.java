@@ -24,21 +24,29 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Component
 public class JwtTokenUtil implements Serializable {
 	
 	private static final long serialVersionUID = -2550185165626007488L;
 	
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
-	
-	
+
+
 	private String secret;
+	private String refreshSecret;
 	private int jwtExpirationInMs;
 	private int refreshExpirationDateInMs;
 	
 	@Value("${jwt.secret}")
 	public void setSecret(String secret) {
 		this.secret = secret;
+	}
+
+	@Value("${jwt.refreshSecret}")
+	public void setRefreshSecret(String refreshSecret) {
+		this.refreshSecret = refreshSecret;
 	}
 	
 	@Value("${jwt.expirationDateInMs}")
@@ -57,6 +65,10 @@ public class JwtTokenUtil implements Serializable {
 		Claims claims = test.getBody();
 		return claims.getSubject();
 		
+	}
+
+	public String getUserNameFromBearerToken(String token) {
+		return getUsernameFromToken(token.substring(7));
 	}
 	
 	//retrieve expiration date from jwt token
@@ -78,12 +90,7 @@ public class JwtTokenUtil implements Serializable {
 		final Date expiration = getExpirationDateFromToken(token);
 		return expiration.before(new Date());
 	}
-	
-	//generate token for user
-//	public String generateToken(UserDetails userDetails) {
-//		Map<String, Object> claims = new HashMap<>();
-//		return doGenerateToken(claims, userDetails.getUsername());
-//	}
+
 	
 	//generate token for user
 	public String generateToken(UserDetails userDetails) {
@@ -102,6 +109,21 @@ public class JwtTokenUtil implements Serializable {
 		
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
+
+
+	public String generateRefreshToken(Long id) {
+
+		return doGenerateRefreshToken(id);
+	}
+
+	public String refreshToken(HttpServletRequest request)
+	{
+		String refreshToken = request.getHeader("Authorization");
+		Claims claims = Jwts.parser().setSigningKey(refreshSecret).parseClaimsJws(refreshToken).getBody();
+		Long id = new Long(claims.getId());
+		return null;
+
+	}
 	//while creating the token -
 	//1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
 	//2. Sign the JWT using the HS512 algorithm and secret key.
@@ -115,12 +137,20 @@ public class JwtTokenUtil implements Serializable {
 		
 	}
 	
-	public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {
-		
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+//	public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {
+//
+//		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+//				.setExpiration(new Date(System.currentTimeMillis() + refreshExpirationDateInMs))
+//				.signWith(SignatureAlgorithm.HS512, secret).compact();
+//
+//	}
+
+	public String doGenerateRefreshToken(Long id) {
+
+		return Jwts.builder().setId(String.valueOf(id)).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + refreshExpirationDateInMs))
-				.signWith(SignatureAlgorithm.HS512, secret).compact();
-		
+				.signWith(SignatureAlgorithm.HS512, refreshSecret).compact();
+
 	}
 	//validate token
 	public Boolean validateToken(String token, UserDetails userDetails) {
