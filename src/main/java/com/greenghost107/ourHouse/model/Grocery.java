@@ -17,6 +17,8 @@ public class Grocery implements Serializable {
 	private String name;
 	
 	private double quantity;
+
+	private Boolean isMarked;
 	
 	
 	@JsonBackReference(value = "groceryList-id")
@@ -28,17 +30,20 @@ public class Grocery implements Serializable {
 	public Grocery(String name) {
 		this.name = name;
 		this.quantity = 0;
+		this.isMarked = Boolean.FALSE;
 	}
 	
-	public Grocery(String name, double quantity) {
+	public Grocery(String name, double quantity,boolean isMarked) {
 		this.name = name;
 		this.quantity = quantity;
+		this.isMarked = isMarked;
 	}
 	
 	public Grocery(String name, double quantity, GroceryList groceryList) {
 		this.name = name;
 		this.quantity = quantity;
 		this.groceryList = groceryList;
+		this.isMarked = Boolean.FALSE;
 	}
 	
 	
@@ -57,7 +62,15 @@ public class Grocery implements Serializable {
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
-	
+
+	public Boolean getMarked() {
+		return isMarked;
+	}
+
+	public void setMarked(Boolean marked) {
+		isMarked = marked;
+	}
+
 	public GroceryList getGroceryList() {
 		return groceryList;
 	}
@@ -65,4 +78,5 @@ public class Grocery implements Serializable {
 	public void setGroceryList(GroceryList groceryList) {
 		this.groceryList = groceryList;
 	}
+
 }

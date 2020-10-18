@@ -14,7 +14,8 @@ export class HouseComponent implements OnInit {
   displayCreate: boolean = false;
   displayJoin: boolean = false;
   groceryLists = [];
-  selectedGorceryListId: number;
+  // selectedGorceryListId: number;
+  selectedGroceryList: GroceryList;
   finishedLoading = false;
   displayGroceryListName:boolean = false;
   
@@ -60,7 +61,6 @@ refreshGroceryLists()
 onsave(houseName,housePassword)
     {
         console.dir(houseName.value);
-        // this.userService.joinUserToHouse(this.currentUser,new House(houseName.value,housePassword.value)).subscribe(()=>{});
         this.userService.createHouse(this.user,new House(houseName.value,housePassword.value)).subscribe(()=>{
             this.displayCreate = false;
             this.ngOnInit();
@@ -86,18 +86,38 @@ onsave(houseName,housePassword)
     {
       
       let groceryList :GroceryList = new GroceryList("",null,groceryListName.value);
-      // groceryList.groceryListName = groceryListName.value;
         this.houseService.createNewGroceryList(this.house,groceryList).subscribe((grceryList)=>{
           this.groceryLists.push(grceryList);
           this.displayGroceryListName = false;
+          groceryListName.value='';
+        },
+        (error)=>{
+          this.messageService.add({severity:'error', summary:'Error adding grocery list', detail:'duplicate names are not allowed'});
+          this.displayGroceryListName = false;
+  
         });
     }
 
 
-    getGroceryList(id:number)
-    {
+    // getGroceryList(id:number)
+    // {
         
-        this.selectedGorceryListId = id;
+    //     this.selectedGorceryListId = id;
+    // }
+
+    getGroceryList(groceryList:GroceryList)
+    {
+        this.selectedGroceryList = groceryList;
+    }
+
+    closeGroceryList()
+    {
+      this.displayGroceryListName = false;
+    }
+
+    deleteGroceryListReload()
+    {
+      this.ngOnInit();
     }
 
 }

@@ -13,13 +13,13 @@ public class GroceryDto {
 	
 	private double quantity;
 	
-	private String url;
+	private boolean isMarked;
 	
 	
-	public GroceryDto(String name, double quantity, String url) {
+	public GroceryDto(String name, double quantity, boolean isMarked) {
 		this.name = name;
 		this.quantity = quantity;
-		this.url = url;
+		this.isMarked = isMarked;
 	}
 	
 	public String getName() {
@@ -37,12 +37,12 @@ public class GroceryDto {
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
-	
-	public String getUrl() {
-		return url;
+
+	public boolean isMarked() {
+		return isMarked;
 	}
-	
-	public void setUrl(String url) {
-		this.url = url;
+
+	public void setMarked(boolean marked) {
+		isMarked = marked;
 	}
 }

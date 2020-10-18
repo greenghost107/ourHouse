@@ -14,7 +14,8 @@ import java.util.List;
 
 @Repository
 public interface GroceryListRepository  extends JpaRepository<GroceryList, Long> {
-	GroceryList findGroceryListByHouse(House house);
+
+	List<GroceryList> findGroceryListByHouse(House house);
 	
 	void deleteById(Long id);
 	

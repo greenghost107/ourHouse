@@ -1,9 +1,20 @@
 <p-progressSpinner *ngIf="!finishedLoading"></p-progressSpinner>
 <div  *ngIf="finishedLoading">
-<div><Title></Title> here</div>
-<ul>
+<div><Title></Title> {{currentGroceryList.groceryListName}}</div>
+<!-- <ul>
     <li *ngFor="let grocery of groceryList">{{grocery.name}} {{grocery.quantity}}</li>
-</ul>
+</ul> -->
+
+<div *ngFor="let grocery of groceryList" class="p-field-checkbox">
+    <!-- <input type="checkbox" [checked]="grocery.isMarked == true" (change)="checkGrocery(grocery)"> {{grocery.name}} {{grocery.quantity}} -->
+    <!-- <p-checkbox label="{{grocery.name}} {{grocery.quantity}}" [(ngModel)]="grocery.isMarked"></p-checkbox> -->
+    
+    <!-- <p-checkbox value="grocery.isMarked" [(ngModel)]="toMark"></p-checkbox> -->
+    <p-checkbox name="group-2" value="grocery" [value]="grocery" label="{{grocery.name}} {{grocery.quantity}}" [(ngModel)]="marked" [inputId]="grocery.id" (ngModelChange)="changeMarking(grocery)"></p-checkbox>
+   
+    
+</div>
+
 <br>
 <div>
     <div>
@@ -15,10 +26,11 @@
         <input type="text" #quantityInput>
     </div>
     <!-- <button (click)="onsave(houseName,housePassword)">Add Grocery</button> -->
-    <button (click)="addGrocery(groceryNameInput,quantityInput)">Add Grocery</button>
+    <button (click)="addGrocery(groceryNameInput,quantityInput);">Add Grocery</button>
 </div>
 <br><br>
 <div>
-    <button (click)="saveGroceryList()">Save Grocery List</button>
+    <button (click)="saveGroceryList()">Update Grocery List</button>
+    <button *ngIf="marked.length == groceryList.length"(click)="deleteGroceryList()">Complete groceryList</button>
 </div>
 </div>

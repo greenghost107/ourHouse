@@ -14,4 +14,5 @@ export interface Grocery {
     id?: number;
     name: string;
     quantity: number;
+    marked: boolean;
   }

@@ -3,6 +3,7 @@
  */
 package com.greenghost107.ourHouse.service;
 
+import com.greenghost107.ourHouse.dto.GroceryDto;
 import com.greenghost107.ourHouse.model.Grocery;
 import com.greenghost107.ourHouse.model.GroceryList;
 
@@ -18,5 +19,7 @@ public interface GroceryService {
 	
 	List<Grocery> getByGroceryListId(Long id);
 
-	 List<Grocery> saveGroceries(List<Grocery> groceries,GroceryList groceryList);
+	 List<Grocery> saveGroceries(List<GroceryDto> groceries, GroceryList groceryList);
+
+    List<Grocery> markGroceries(List<Grocery> groceries, Long groceryListId);
 }

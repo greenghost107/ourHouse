@@ -51,7 +51,11 @@ public House(String name,String housePassword, User user) {
 		this.houseName = houseName;
 		this.housePassword = housePassword;
 	}
-	
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}

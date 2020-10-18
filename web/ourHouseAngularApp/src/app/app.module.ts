@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DialogModule} from 'primeng/dialog';
@@ -9,6 +9,7 @@ import {CardModule} from 'primeng/card';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ToastModule} from 'primeng/toast';
+import {CheckboxModule} from 'primeng/checkbox';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -24,8 +25,11 @@ import { GrocerylistComponent } from './grocerylist/grocerylist.component';;
 import { HouseComponent } from './house/house.component'
 
 
+
+
 @NgModule({
     imports: [
+        FormsModule,
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -35,18 +39,17 @@ import { HouseComponent } from './house/house.component'
         CardModule,
         OverlayPanelModule,
         ProgressSpinnerModule,
-        ToastModule
+        ToastModule,
+        CheckboxModule
     ],
     declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        AlertComponent
-,
-        GrocerylistComponent
-,
-        HouseComponent           ],
+        AlertComponent,
+        GrocerylistComponent,
+        HouseComponent          ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

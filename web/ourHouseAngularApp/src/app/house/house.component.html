@@ -40,8 +40,7 @@
             {{house.houseName}}
         </p-header>
         <ul>
-            <li *ngFor="let groceryList of groceryLists" (click)="getGroceryList(groceryList.id); op.toggle($event)">{{groceryList.groceryListName}}</li>
-            <!-- <li *ngFor="let groceryList of groceryLists" (click)="method(groceryList.name)">{{groceryList}}</li> -->
+            <li *ngFor="let groceryList of groceryLists" (click)="getGroceryList(groceryList); op.toggle($event)" >{{groceryList.groceryListName}}</li>
         </ul>
         <p-footer>
             <button type="button" (click)="displayGroceryListNameDialog()" icon="pi pi-info-circle" label="Show">Create new GroceryList</button>
@@ -56,9 +55,10 @@
     </div>
     </p-card>
 
-    <p-overlayPanel #op>
+    <p-overlayPanel #op [appendTo]="list">
         <ng-template pTemplate>
-            <app-grocerylist [id]="selectedGorceryListId"></app-grocerylist>
+            <!-- <app-grocerylist [id]="selectedGorceryListId"></app-grocerylist> -->
+            <app-grocerylist [currentGroceryList]="selectedGroceryList" (onSaveClick)="op.hide()" (onDeleteClick)="deleteGroceryListReload(); op.hide()"></app-grocerylist>
         </ng-template>
     </p-overlayPanel>
 </div>

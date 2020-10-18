@@ -3,6 +3,7 @@
  */
 package com.greenghost107.ourHouse.web.security;
 
+import com.greenghost107.ourHouse.dto.GroceryDto;
 import com.greenghost107.ourHouse.exceptions.SpringException;
 import com.greenghost107.ourHouse.model.Grocery;
 import com.greenghost107.ourHouse.service.GroceryListService;
@@ -38,13 +39,26 @@ public class GroceryListController {
 				.orElseThrow(() -> new SpringException("Couldn't get groceries for grocerylist with id +" + groceryListId));
 		
 	}
-	
+
 	@RequestMapping(value = "/saveGroceryList/{groceryListId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> saveGroceryList(@PathVariable( "groceryListId" ) Long groceryListId, @RequestBody List<Grocery> groceries) {
+	public ResponseEntity<?> saveGroceryList(@PathVariable( "groceryListId" ) Long groceryListId, @RequestBody List<GroceryDto> groceries) {
 		LOGGER.debug("saveGroceryList " + groceryListId);
 		return Optional.ofNullable(groceryListService.saveGroceries(groceries,groceryListId))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("can't save the grocerylist"));
 	}
-	
+	@RequestMapping(value = "/deleteGroceryList/{groceryListId}", method = RequestMethod.DELETE)
+	public void deleteGroceryList(@PathVariable( "groceryListId" ) Long groceryListId) {
+		LOGGER.debug("deleteGroceryList " + groceryListId);
+		groceryListService.removeGroceryList(groceryListId);
+	}
+
+	@RequestMapping(value = "/markGroceries/{groceryListId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> markGroceries(@PathVariable( "groceryListId" ) Long groceryListId, @RequestBody List<Grocery> groceries) {
+		LOGGER.debug("saveGroceryList " + groceryListId);
+		return Optional.ofNullable(groceryListService.markGroceries(groceries,groceryListId))
+				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
+				.orElseThrow(() -> new SpringException("can't update grocerylist " + groceryListId));
+	}
+
 }

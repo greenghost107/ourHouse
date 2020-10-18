@@ -16,12 +16,16 @@ import java.util.List;
 public interface GroceryListService {
 
 	void removeGroceryList(GroceryList groceryList);
+
+	void removeGroceryList(Long grocerListId);
 	
 	List<GroceryList> getGroceryListByHouseId(Long houseId);
 	
 	GroceryList saveGroceryList(GroceryList groceryList);
 
-	List<Grocery> saveGroceries(List<Grocery> groceries,Long groceryListId);
+	List<Grocery> saveGroceries(List<GroceryDto> groceries,Long groceryListId);
 
 	GroceryList createNewGroceryListForHouse(House house, String creator,String groceryListName);
+
+	List<Grocery> markGroceries(List<Grocery> groceries, Long groceryListId);
 }

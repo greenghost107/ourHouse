@@ -23,7 +23,7 @@ public class GroceryList implements Serializable {
 	private LocalDateTime dt_created;
 	
 	private String creatorName;
-	@Column(unique = true)
+
 	private String groceryListName;
 	
 	@JsonBackReference(value = "groceryList_house")
