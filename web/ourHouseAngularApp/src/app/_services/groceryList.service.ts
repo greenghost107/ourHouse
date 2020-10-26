@@ -5,7 +5,7 @@ import { User } from '@/_models';
 import { House } from '@/_models';
 import { GroceryList} from '@/_models';
 import { Grocery} from '@/_models';
-
+import {environment} from './../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class GroceryListService {
     constructor(private http: HttpClient) { }
@@ -13,22 +13,26 @@ export class GroceryListService {
 
     getGrocerysForId(id:number)
     {
-        return this.http.get<Grocery[]>("http://localhost:8080/groceryList/" + id,this.getHttpGetOptions());
+        // return this.http.get<Grocery[]>("http://localhost:8080/groceryList/" + id,this.getHttpGetOptions());
+        return this.http.get<Grocery[]>(environment.serverUrl + '/groceryList/' + id,this.getHttpGetOptions());
     }
 
     saveGroceryList(groceryList: Grocery[],id:number)
     {
-        return this.http.post<Grocery[]>("http://localhost:8080/groceryList/saveGroceryList/" + id,groceryList,this.getHttpPostOptions());
+        // return this.http.post<Grocery[]>("http://localhost:8080/groceryList/saveGroceryList/" + id,groceryList,this.getHttpPostOptions());
+        return this.http.post<Grocery[]>(environment.serverUrl + '/groceryList/saveGroceryList/' + id,groceryList,this.getHttpPostOptions());
     }
 
     updateGroceryList(groceryList: Grocery[],id:number)
     {
-        return this.http.post<Grocery[]>("http://localhost:8080/groceryList/markGroceries/" + id,groceryList,this.getHttpPostOptions());
+        // return this.http.post<Grocery[]>("http://localhost:8080/groceryList/markGroceries/" + id,groceryList,this.getHttpPostOptions());
+        return this.http.post<Grocery[]>(environment.serverUrl + '/groceryList/markGroceries/' + id,groceryList,this.getHttpPostOptions());
     }
 
     deleteGroceryList(id:number)
     {
-        return this.http.delete("http://localhost:8080/groceryList/deleteGroceryList/" + id,this.getHttpGetOptions());
+        // return this.http.delete("http://localhost:8080/groceryList/deleteGroceryList/" + id,this.getHttpGetOptions());
+        return this.http.delete(environment.serverUrl + '/groceryList/deleteGroceryList/' + id,this.getHttpGetOptions());
     }
     getHttpPostOptions() {
         // const token = localStorage.getItem('token');

@@ -11,12 +11,13 @@ import com.greenghost107.ourHouse.repository.HouseRepository;
 import com.greenghost107.ourHouse.repository.UserRepository;
 import com.greenghost107.ourHouse.service.HouseService;
 import com.greenghost107.ourHouse.service.UserService;
+import javafx.beans.binding.IntegerBinding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -137,7 +138,5 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 	}
-
-
 
 }

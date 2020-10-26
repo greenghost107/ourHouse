@@ -55,9 +55,9 @@ public class GroceryListController {
 
 	@RequestMapping(value = "/markGroceries/{groceryListId}", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> markGroceries(@PathVariable( "groceryListId" ) Long groceryListId, @RequestBody List<Grocery> groceries) {
-		LOGGER.debug("saveGroceryList " + groceryListId);
+		LOGGER.debug("markGroceries in groceryList " + groceryListId);
 		return Optional.ofNullable(groceryListService.markGroceries(groceries,groceryListId))
-				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
+				.map(groc -> new ResponseEntity<>(groc, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("can't update grocerylist " + groceryListId));
 	}
 

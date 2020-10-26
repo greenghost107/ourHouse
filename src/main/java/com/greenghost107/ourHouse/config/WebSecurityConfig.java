@@ -24,7 +24,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import java.util.Arrays;
 
@@ -82,8 +84,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
-				.antMatchers(HttpMethod.OPTIONS);
+				.antMatchers(HttpMethod.OPTIONS).antMatchers("/resources/**").anyRequest();
 	}
+
 //	@Bean
 //	CorsConfigurationSource corsConfigurationSource() {
 //		UrlBasedCorsConfigurationSource source = new

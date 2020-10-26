@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '@/_models';
-
+import {environment} from './../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
@@ -22,8 +22,9 @@ export class AuthenticationService {
     }
 
     login(username, password) {
-        return this.http.post<any>(`http://localhost:8080/authenticate`, { username, password })
+        return this.http.post<any>(environment.serverUrl + `/authenticate`, { username, password })
             .pipe(map(data => {
+                
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 const decoded = this.helper.decodeToken(data.token);
 
