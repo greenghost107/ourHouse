@@ -6,6 +6,7 @@ package com.greenghost107.ourHouse.web.security;
 import com.greenghost107.ourHouse.dto.GroceryDto;
 import com.greenghost107.ourHouse.exceptions.SpringException;
 import com.greenghost107.ourHouse.model.Grocery;
+import com.greenghost107.ourHouse.service.ExpenseService;
 import com.greenghost107.ourHouse.service.GroceryListService;
 import com.greenghost107.ourHouse.service.GroceryService;
 import org.slf4j.Logger;
@@ -29,6 +30,9 @@ public class GroceryListController {
 	
 	@Autowired
 	private GroceryService groceryService;
+
+	@Autowired
+	private ExpenseService expenseService;
 	
 	@RequestMapping(value = "/{groceryListId}", method = RequestMethod.GET)
 	public ResponseEntity<?> getGroceryListsForHouse(@PathVariable( "groceryListId" ) Long groceryListId)
@@ -47,9 +51,18 @@ public class GroceryListController {
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
 				.orElseThrow(() -> new SpringException("can't save the grocerylist"));
 	}
-	@RequestMapping(value = "/deleteGroceryList/{groceryListId}", method = RequestMethod.DELETE)
-	public void deleteGroceryList(@PathVariable( "groceryListId" ) Long groceryListId) {
+//	@RequestMapping(value = "/deleteGroceryList/{groceryListId}", method = RequestMethod.DELETE)
+//	public void deleteGroceryList(@PathVariable( "groceryListId" ) Long groceryListId) {
+//		LOGGER.debug("deleteGroceryList " + groceryListId);
+//		groceryListService.removeGroceryList(groceryListId);
+//	}
+
+	@RequestMapping(value = "/deleteGroceryList/{groceryListId}/{price}", method = RequestMethod.DELETE)
+	public void deleteGroceryListWithPrice(@RequestHeader("Authorization") String token,@PathVariable( "groceryListId" ) Long groceryListId,@PathVariable("price") Double price) {
 		LOGGER.debug("deleteGroceryList " + groceryListId);
+		//add expense
+		expenseService.addExpenseDoneShopping(token,groceryListId,price);
+		//delete groceryList
 		groceryListService.removeGroceryList(groceryListId);
 	}
 

@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from '@/_models';
+import { Expense, User } from '@/_models';
 import { House } from '@/_models';
 import { GroceryList} from '@/_models';
 import {environment} from './../../environments/environment';
@@ -40,6 +40,11 @@ export class HouseService {
         const token = 'Bearer ' +localStorage.getItem("access_token");
         // return this.http.get<House>("http://localhost:8080/house/getHouse",this.getHttpGetOptions());
         return this.http.get<House>(environment.serverUrl + '/house/getHouse',this.getHttpGetOptions());
+    }
+
+    getExpensesForHouse(houseId:number)
+    {
+        return this.http.get<[Expense]>(environment.serverUrl + '/expense/' + houseId,this.getHttpGetOptions());
     }
 
 getHttpPostOptions() {

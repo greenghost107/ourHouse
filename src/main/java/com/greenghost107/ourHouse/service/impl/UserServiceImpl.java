@@ -11,7 +11,6 @@ import com.greenghost107.ourHouse.repository.HouseRepository;
 import com.greenghost107.ourHouse.repository.UserRepository;
 import com.greenghost107.ourHouse.service.HouseService;
 import com.greenghost107.ourHouse.service.UserService;
-import javafx.beans.binding.IntegerBinding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,14 +48,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public House createHouseForUser(String userName, String houseName, String housePassword) {
 		User user = userRepository.findByUsername(userName);
-		//TODO validate houseName
-		//TODO handle password
+		if(!validateHouseName(houseName))
+		{
+			LOGGER.error("house name is invalid " + houseName);
+			return null;
+		}
 		House house = houseService.addHouse(new House(houseName,housePassword,user));
 		user.setHouse(house);
 		userRepository.save(user);
 		return house;
 	}
-	
+
+	private boolean validateHouseName(String houseName) {
+		return (!houseName.isEmpty() && houseName.length()<16 && houseName.length()>2);
+	}
+
+
 	@Override
 	public House joinHouse(String joiningUserName, String houseName, String password) {
 		User joiningUser = userRepository.findByUsername(joiningUserName);
@@ -88,8 +95,6 @@ public class UserServiceImpl implements UserService {
 	public House createHouseForUser(String token, HouseDto houseDto) {
 		String userName = jwtTokenUtil.getUserNameFromBearerToken(token);
 		User user = userRepository.findByUsername(userName);
-		//TODO validate houseName
-		//TODO handle password
 		Optional<House> optHouse = houseService.findByHouseName(houseDto.getHouseName());
 		if(optHouse.isPresent())
 		{

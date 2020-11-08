@@ -66,10 +66,15 @@ public class HouseServiceImpl implements HouseService {
 	public House getHouseForUser(String token) {
 		String userName = jwtTokenUtil.getUserNameFromBearerToken(token);
 		User user = userRepository.findByUsername(userName);
+		if(user.getHouse()==null)
+		{
+			LOGGER.info("No House was found for user " + userName);
+			return null;
+		}
 		Optional<House> optHouse = houseRepository.findById(user.getHouse().getId());
 		if(!optHouse.isPresent())
 		{
-			LOGGER.info("No House was found for user " + userName);
+			LOGGER.info("Failed To find house in repository" + userName);
 			return null;
 		}
 		return optHouse.get();

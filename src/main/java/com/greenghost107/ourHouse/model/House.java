@@ -31,6 +31,10 @@ public class House {
 	@JsonBackReference(value = "house_groceryList")
 	@OneToMany(mappedBy="house",cascade=CascadeType.ALL)
 	private List<GroceryList> groceryList;
+
+	@JsonBackReference(value = "house_expense")
+	@OneToMany(mappedBy="house",cascade=CascadeType.ALL)
+	private List<Expense> expenses;
 	
 	public House(){}
 	
@@ -101,5 +105,13 @@ public House(String name,String housePassword, User user) {
 	
 	public void setHousePassword(String housePassword) {
 		this.housePassword = housePassword;
+	}
+
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
 	}
 }

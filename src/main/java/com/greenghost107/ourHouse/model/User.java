@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.greenghost107.ourHouse.model.security.Role;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -29,7 +30,7 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	private Role role;
-	
+
 	public User() {
 	}
 	

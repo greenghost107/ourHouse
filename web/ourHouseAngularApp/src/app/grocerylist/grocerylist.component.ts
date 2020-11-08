@@ -19,6 +19,7 @@ export class GrocerylistComponent implements OnInit {
   
   finishedLoading:boolean = false;
   canComplete:boolean = false;
+  displayExpense:boolean = false;
   constructor(private groceryListService: GroceryListService) { }
 
   ngOnInit(): void {
@@ -145,10 +146,15 @@ export class GrocerylistComponent implements OnInit {
       console.log("nothing to update");
     }
   }
+  displayExpenseDialog()
+  {
+    this.displayExpense = true;
+  }
 
 
-  deleteGroceryList(){
-    this.groceryListService.deleteGroceryList(this.currentGroceryList.id).subscribe(()=>{
+  deleteGroceryList(price:number){
+    console.log(price);
+    this.groceryListService.deleteGroceryList(this.currentGroceryList.id,+price).subscribe(()=>{
       this.onDeleteClick.emit();
     });
   }

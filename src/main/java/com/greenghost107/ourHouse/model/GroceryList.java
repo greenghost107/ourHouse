@@ -98,5 +98,13 @@ public class GroceryList implements Serializable {
 	public void setGroceryListName(String groceryListName) {
 		this.groceryListName = groceryListName;
 	}
+
+	public House getHouse() {
+		return house;
+	}
+
+	public void setHouse(House house) {
+		this.house = house;
+	}
 }
 

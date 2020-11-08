@@ -39,10 +39,11 @@ public class HouseController {
 	@RequestMapping(value = "/getHouse" , method = RequestMethod.GET)
 	public ResponseEntity<?> getHouse(@RequestHeader("Authorization") String token)
 	{
-		LOGGER.debug("getHouse" );
+		LOGGER.debug("getHouse");
 		return Optional.ofNullable(houseService.getHouseForUser(token))
 				.map(hous -> new ResponseEntity<>(hous, HttpStatus.OK))
-				.orElseThrow(() -> new SpringException("Can't find house for user"));
+//				.orElseThrow(() -> new SpringException("Can't find house for user"));
+		.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 	
 	@RequestMapping(value = "/getGroceryLists/{houseId}", method = RequestMethod.GET)

@@ -23,6 +23,7 @@ import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';;
 import { GrocerylistComponent } from './grocerylist/grocerylist.component';;
 import { HouseComponent } from './house/house.component'
+;
 
 
 
@@ -49,7 +50,8 @@ import { HouseComponent } from './house/house.component'
         RegisterComponent,
         AlertComponent,
         GrocerylistComponent,
-        HouseComponent          ],
+        HouseComponent 
+                 ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

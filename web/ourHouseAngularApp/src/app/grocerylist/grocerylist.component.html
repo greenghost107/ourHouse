@@ -31,6 +31,14 @@
 <br><br>
 <div>
     <button (click)="saveGroceryList()">Update Grocery List</button>
-    <button *ngIf="marked.length == groceryList.length"(click)="deleteGroceryList()">Complete groceryList</button>
+    <button *ngIf="marked.length == groceryList.length"(click)="displayExpenseDialog()">Complete groceryList</button>
+    <p-dialog header="Grocery List Name" [(visible)]="displayExpense">
+        <div>
+            <!-- <label for="name">Grocery List Name</label> -->
+            <label for="price">Price</label>
+            <input type="number" #price>
+        </div>
+        <button (click)="deleteGroceryList(price.value)">enter</button>
+    </p-dialog>
 </div>
 </div>

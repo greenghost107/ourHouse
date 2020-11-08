@@ -11,6 +11,10 @@ export class GroceryListService {
     constructor(private http: HttpClient) { }
 
 
+    displayExpenseDialog()
+    {
+
+    }
     getGrocerysForId(id:number)
     {
         // return this.http.get<Grocery[]>("http://localhost:8080/groceryList/" + id,this.getHttpGetOptions());
@@ -29,10 +33,10 @@ export class GroceryListService {
         return this.http.post<Grocery[]>(environment.serverUrl + '/groceryList/markGroceries/' + id,groceryList,this.getHttpPostOptions());
     }
 
-    deleteGroceryList(id:number)
+    deleteGroceryList(id:number,price:number)
     {
         // return this.http.delete("http://localhost:8080/groceryList/deleteGroceryList/" + id,this.getHttpGetOptions());
-        return this.http.delete(environment.serverUrl + '/groceryList/deleteGroceryList/' + id,this.getHttpGetOptions());
+        return this.http.delete(environment.serverUrl + '/groceryList/deleteGroceryList/' + id + '/' + price,this.getHttpGetOptions());
     }
     getHttpPostOptions() {
         // const token = localStorage.getItem('token');

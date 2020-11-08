@@ -18,6 +18,7 @@ export class HouseComponent implements OnInit {
   selectedGroceryList: GroceryList;
   finishedLoading = false;
   displayGroceryListName:boolean = false;
+  expenses = [];
   
   constructor(private userService: UserService,private houseService: HouseService, private messageService: MessageService) { }
 
@@ -118,6 +119,16 @@ onsave(houseName,housePassword)
     deleteGroceryListReload()
     {
       this.ngOnInit();
+    }
+
+    getExpenses()
+    {
+      this.houseService.getExpensesForHouse(this.house.id).subscribe((expenses)=>{
+        console.log(expenses);
+        this.expenses = expenses;
+      }
+
+      );
     }
 
 }

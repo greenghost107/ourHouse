@@ -53,12 +53,47 @@
             </p-dialog>
         </p-footer>
     </div>
+    
     </p-card>
+    
+
+    <p-card *ngIf="house">
+        <div *ngIf="house">
+          <p-header>
+                <button type="button" (click)="getExpenses(); opExpense.toggle($event)" icon="pi pi-info-circle" label="Show">Expenses</button>
+            </p-header>
+        </div>
+        
+        </p-card>
 
     <p-overlayPanel #op [appendTo]="list">
         <ng-template pTemplate>
             <!-- <app-grocerylist [id]="selectedGorceryListId"></app-grocerylist> -->
             <app-grocerylist [currentGroceryList]="selectedGroceryList" (onSaveClick)="op.hide()" (onDeleteClick)="deleteGroceryListReload(); op.hide()"></app-grocerylist>
+        </ng-template>
+    </p-overlayPanel>
+
+    <p-overlayPanel #opExpense [appendTo]="list">
+        <ng-template pTemplate>
+            <!-- <app-grocerylist [id]="selectedGorceryListId"></app-grocerylist> -->
+            <!-- <app-grocerylist [currentGroceryList]="selectedGroceryList" (onSaveClick)="opExpense.hide()" (onDeleteClick)="deleteGroceryListReload(); opExpense.hide()"></app-grocerylist> -->
+            <!-- <p-table [value]="expenses" [paginator]="true" [rows]="5">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-product>
+                    <tr [pSelectableRow]="rowData">
+                        <td>{{expense.expense_name}}</td>
+                        <td>{{expense.price}}</td>
+                    </tr>
+                </ng-template>
+            </p-table> -->
+            <ul>
+                <li *ngFor="let expense of expenses"  >{{expense.expenseName}} {{expense.price}}</li>
+            </ul>
         </ng-template>
     </p-overlayPanel>
 </div>
